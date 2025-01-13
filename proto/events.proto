@@ -31,9 +31,10 @@ message Event {
     repeated Speaker speakers = 3;
     string description = 4;
     string location = 5;
-    google.protobuf.Timestamp time = 6;
-    int32 seats = 7;
-    string info = 8;
+    google.protobuf.Timestamp start_time = 6;
+    google.protobuf.Timestamp end_time = 7;
+    int32 seats = 8;
+    string info = 9;
 }
 
 message EventList {

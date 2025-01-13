@@ -28,6 +28,7 @@ message User {
     string email = 2;
     optional string description = 3;
     repeated hestia.jobfair.v1.common.Interest interests = 4;
+    repeated hestia.jobfair.v1.common.ContractType contractTypes = 5;
 }
 
 message RegisterRequest {

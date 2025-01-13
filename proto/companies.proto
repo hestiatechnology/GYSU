@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package hestia.jobfair.v1.company;
+import "google/protobuf/empty.proto";
+import "common.proto";
+option go_package = "hestia/api/pb/company";
+
+service CompanyManagement {
+    rpc CreateCompany(Company) returns (hestia.jobfair.v1.common.Id);
+    rpc GetCompanies(google.protobuf.Empty) returns (ListCompaniesResponse);
+    rpc GetCompany(hestia.jobfair.v1.common.Id) returns (Company);
+    rpc UpdateCompany(Company) returns (google.protobuf.Empty);
+    //rpc DeleteCompany(DeleteCompanyRequest) returns (DeleteCompanyResponse);
+    //rpc ListCompanies(ListCompaniesRequest) returns (ListCompaniesResponse);
+}
+
+message Location {
+    string address = 1;
+    string locality = 2;
+    string postalCode = 3;
+    // Must be a Alpha-2 code
+    string country = 4;
+}
+
+message Company {
+    optional string id = 1;
+    string name = 2;
+    string stand = 3;
+    string address = 4;
+    string description = 5;
+    repeated hestia.jobfair.v1.common.Interest interests = 6;
+    repeated hestia.jobfair.v1.common.ContractType contractTypes = 7;
+}
+
+message ListCompaniesResponse {
+    repeated Company companies = 1;
+}
+
+
