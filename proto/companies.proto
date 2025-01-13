@@ -3,9 +3,9 @@ syntax = "proto3";
 package hestia.jobfair.v1.company;
 import "google/protobuf/empty.proto";
 import "common.proto";
-option go_package = "hestia/api/pb/company";
+option go_package = "hestia/jobfair/api/pb/company";
 
-service CompanyManagement {
+service CompanyService {
     rpc CreateCompany(Company) returns (hestia.jobfair.v1.common.Id);
     rpc GetCompanies(google.protobuf.Empty) returns (ListCompaniesResponse);
     rpc GetCompany(hestia.jobfair.v1.common.Id) returns (Company);
@@ -30,6 +30,7 @@ message Company {
     string description = 5;
     repeated hestia.jobfair.v1.common.Interest interests = 6;
     repeated hestia.jobfair.v1.common.ContractType contractTypes = 7;
+    bool visited = 8;
 }
 
 message ListCompaniesResponse {

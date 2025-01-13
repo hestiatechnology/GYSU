@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package hestia.jobfair.v1.checkin;
+import "google/protobuf/empty.proto";
+import "common.proto";
+option go_package = "hestia/jobfair/api/pb/company";
+
+service Checkin {
+    rpc CheckinUser(CheckinRequest) returns (CheckinResponse);
+    rpc CheckinToEvent(CheckinRequest) returns (CheckinResponse);
+    rpc Empty(google.protobuf.Empty) returns (google.protobuf.Empty);
+    //rpc CreateCompany(Company) returns (hestia.jobfair.v1.common.Id);
+    //rpc GetCompanies(google.protobuf.Empty) returns (ListCompaniesResponse);
+    //rpc GetCompany(hestia.jobfair.v1.common.Id) returns (Company);
+    //rpc UpdateCompany(Company) returns (google.protobuf.Empty);
+    //rpc DeleteCompany(DeleteCompanyRequest) returns (DeleteCompanyResponse);
+    //rpc ListCompanies(ListCompaniesRequest) returns (ListCompaniesResponse);
+}
+
+message CheckinRequest {
+    string token = 1;
+}
+
+message CheckinResponse {
+    hestia.jobfair.v1.common.Id id = 1;
+    string email = 2;
+    string company = 3;
+}
