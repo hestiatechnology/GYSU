@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package hestia.jobfair.v1.common;
+option go_package = "hestia/jobfair/api/pb/common";
+
+message Id {
+    string id = 1;
+}
+
+message Token {
+    string token = 1;
+}
+
+message Pagination {
+    int32 page = 1;
+    int32 limit = 2;
+}
+
+message Interest {
+    string id = 1;
+    string name = 2;
+}
