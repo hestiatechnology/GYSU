@@ -4,7 +4,7 @@ package hestia.jobfair.v1.identity;
 import "google/protobuf/empty.proto";
 import "google/type/date.proto";
 import "common.proto";
-option go_package = "hestia/jobfair/api/pb/idmanagement";
+option go_package = "hestia/jobfair/api/pb/identity";
 
 service IdentityManagement {
     rpc Login (LoginRequest) returns (LoginResponse);
@@ -20,9 +20,7 @@ message LoginRequest {
 
 message LoginResponse {
     hestia.jobfair.v1.common.Token token = 1;
-    string name = 2;
-    string email = 3;
-    //repeated hestia.v1.company.Company companies = 4;
+    User user = 2;
 }
 
 message User {

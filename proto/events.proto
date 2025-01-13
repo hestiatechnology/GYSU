@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package hestia.jobfair.v1.events;
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "common.proto";
+option go_package = "hestia/jobfair/api/pb/events";
+
+service Events {
+    rpc CreateEvent(Event) returns (hestia.jobfair.v1.common.Id);
+    rpc GetEvents(google.protobuf.Empty) returns (EventList);
+    rpc GetEvent(hestia.jobfair.v1.common.Id) returns (Event);
+    rpc UpdateEvent(Event) returns (google.protobuf.Empty);
+    rpc DeleteEvent(hestia.jobfair.v1.common.Id) returns (google.protobuf.Empty);
+    rpc SubscribeToEvent(hestia.jobfair.v1.common.Id) returns (google.protobuf.Empty);
+    rpc UnsubscribeToEvent(hestia.jobfair.v1.common.Id) returns (google.protobuf.Empty);
+    //rpc Alive (hestia.jobfair.v1.common.Token) returns (google.protobuf.Empty);
+    //rpc Logout (hestia.jobfair.v1.common.Token) returns (google.protobuf.Empty);
+}
+
+message Speaker {
+    optional string id = 1;
+    string name = 2;
+    string description = 3;
+    string photo = 4;
+}
+
+message Event {
+    optional string id = 1;
+    string name = 2;
+    repeated Speaker speakers = 3;
+    string description = 4;
+    string location = 5;
+    google.protobuf.Timestamp time = 6;
+    int32 seats = 7;
+    string info = 8;
+}
+
+message EventList {
+    repeated Event events = 1;
+}
