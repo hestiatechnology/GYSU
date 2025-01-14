@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="1.1.6" use-changelog="false" max-obj-count="4"
+	 last-position="0,1" last-zoom="1"
+	 default-schema="public" default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<database name="jobfair" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" name-color="#000000" sql-disabled="true">
+</schema>
+
+<schema name="company" layers="0" rect-visible="true" fill-color="#ff8586" name-color="#ffffff">
+	<role name="postgres"/>
+</schema>
+
+<table name="company" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="company"/>
+	<role name="postgres"/>
+	<position x="440" y="360"/>
+	<column name="id" not-null="true" default-value="gen_random_uuid()">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="address" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="phone" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="email" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="pk_company" type="pk-constr" table="company.company">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<extension name="pgcrypto">
+	<schema name="public"/>
+</extension>
+
+</dbmodel>
