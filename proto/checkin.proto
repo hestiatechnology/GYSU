@@ -3,11 +3,12 @@ syntax = "proto3";
 package hestia.jobfair.v1.checkin;
 import "google/protobuf/empty.proto";
 import "identity_management.proto";
-option go_package = "hestia/jobfair/api/pb/company";
+option go_package = "hestia/jobfair/api/pb/checkin";
 
 // Check-in is the feature that allows the user to check-in to the event and share their information with the companies
 service Checkin {
     rpc Checkin(CheckinRequest) returns (hestia.jobfair.v1.identity.User);
+    rpc CheckinWithCompany(CheckinWithCompanyRequest) returns (hestia.jobfair.v1.identity.User);
     rpc Empty(google.protobuf.Empty) returns (google.protobuf.Empty);
     //rpc CreateCompany(Company) returns (hestia.jobfair.v1.common.Id);
     //rpc GetCompanies(google.protobuf.Empty) returns (ListCompaniesResponse);
@@ -20,5 +21,12 @@ service Checkin {
 message CheckinRequest {
     // token from the QR code
     string token = 1;
+    // if event_id is not empty, the check-in will be associated with the event
     optional string event_id = 2;
+}
+
+message CheckinWithCompanyRequest {
+    // token from the QR code
+    string token = 1;
+    string company_id = 2;
 }
