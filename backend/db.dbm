@@ -3,8 +3,8 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.1.6" use-changelog="false" max-obj-count="4"
-	 last-position="0,1" last-zoom="1"
+<dbmodel pgmodeler-ver="1.1.6" use-changelog="false" max-obj-count="8"
+	 last-position="83,224" last-zoom="1" scene-rect="0,0,2035.05,1076.8"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -14,17 +14,25 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <database name="jobfair" is-template="false" allow-conns="true">
 </database>
 
-<schema name="public" layers="0" fill-color="#e1e1e1" name-color="#000000" sql-disabled="true">
+<schema name="public" layers="0" rect-visible="true" fill-color="#e1e1e1" name-color="#000000" sql-disabled="true">
 </schema>
 
 <schema name="company" layers="0" rect-visible="true" fill-color="#ff8586" name-color="#ffffff">
 	<role name="postgres"/>
 </schema>
 
+<schema name="users" layers="0" rect-visible="true" fill-color="#b29da8" name-color="#13e534">
+	<role name="postgres"/>
+</schema>
+
+<schema name="events" layers="0" rect-visible="true" fill-color="#118b70" name-color="#19a8fe">
+	<role name="postgres"/>
+</schema>
+
 <table name="company" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="company"/>
 	<role name="postgres"/>
-	<position x="440" y="360"/>
+	<position x="800" y="740"/>
 	<column name="id" not-null="true" default-value="gen_random_uuid()">
 		<type name="uuid" length="0"/>
 	</column>
@@ -48,5 +56,188 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <extension name="pgcrypto">
 	<schema name="public"/>
 </extension>
+
+<table name="users" layers="0" collapse-mode="2" max-obj-count="1" z-value="0">
+	<schema name="users"/>
+	<role name="postgres"/>
+	<position x="340" y="440"/>
+	<column name="id" not-null="true" default-value="gen_random_uuid()">
+		<type name="uuid" length="0"/>
+	</column>
+	<constraint name="pk_users" type="pk-constr" table="users.users">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="event" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="events"/>
+	<role name="postgres"/>
+	<position x="620" y="240"/>
+	<column name="id" not-null="true" default-value="gen_random_uuid()">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="location" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="seats" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="pk_event" type="pk-constr" table="events.event">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="speaker" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="events"/>
+	<role name="postgres"/>
+	<position x="1440" y="240"/>
+	<column name="id" not-null="true" default-value="gen_random_uuid()">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="job" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="company" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="pk_speaker" type="pk-constr" table="events.speaker">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="event_speaker" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="events"/>
+	<role name="postgres"/>
+	<position x="980" y="240"/>
+	<column name="event_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="speaker_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="main_speaker" not-null="true" default-value="false">
+		<type name="bool" length="0"/>
+	</column>
+	<constraint name="pk_event_speaker" type="pk-constr" table="events.event_speaker">
+		<columns names="event_id,speaker_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="visit" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="company"/>
+	<role name="postgres"/>
+	<position x="320" y="740"/>
+	<column name="company_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="note">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="pk_visit" type="pk-constr" table="company.visit">
+		<columns names="company_id,user_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="attendance" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="events"/>
+	<role name="postgres"/>
+	<position x="980" y="460"/>
+	<column name="event_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="entry" not-null="true" default-value="CURRENT_TIMESTAMP">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<column name="exit">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="pk_attendance" type="pk-constr" table="events.attendance">
+		<columns names="event_id,user_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="fk_event_speaker_event" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="events.event" table="events.event_speaker">
+	<columns names="event_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_event_speaker_speaker" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="events.speaker" table="events.event_speaker">
+	<columns names="speaker_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_visit_company" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="company.company" table="company.visit">
+	<columns names="company_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_visit_user" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="users.users" table="company.visit">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_attendance_event" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="events.event" table="events.attendance">
+	<columns names="event_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_attendance_user" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="users.users" table="events.attendance">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_event_speaker_event" type="relfk" layers="0"
+	 custom-color="#560fcd"
+	 src-table="events.event_speaker"
+	 dst-table="events.event" reference-fk="fk_event_speaker_event"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_event_speaker_speaker" type="relfk" layers="0"
+	 custom-color="#276ab8"
+	 src-table="events.event_speaker"
+	 dst-table="events.speaker" reference-fk="fk_event_speaker_speaker"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_visit_company" type="relfk" layers="0"
+	 custom-color="#94c829"
+	 src-table="company.visit"
+	 dst-table="company.company" reference-fk="fk_visit_company"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_visit_users" type="relfk" layers="0"
+	 custom-color="#2b5558"
+	 src-table="company.visit"
+	 dst-table="users.users" reference-fk="fk_visit_user"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_attendance_event" type="relfk" layers="0"
+	 custom-color="#f532b2"
+	 src-table="events.attendance"
+	 dst-table="events.event" reference-fk="fk_attendance_event"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_attendance_users" type="relfk" layers="0"
+	 custom-color="#0d25b5"
+	 src-table="events.attendance"
+	 dst-table="users.users" reference-fk="fk_attendance_user"
+	 src-required="false" dst-required="true"/>
 
 </dbmodel>
