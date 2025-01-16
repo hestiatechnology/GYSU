@@ -99,7 +99,29 @@ func (IdentityServer) Login(ctx context.Context, loginRequest *identity.LoginReq
 }
 
 func (IdentityServer) Logout(ctx context.Context, token *common.Token) (*emptypb.Empty, error) {
-	return nil, nil
+	id, err := uuid.Parse(token.GetToken())
+	if err != nil {
+		return nil, herror.StatusWithInfo(codes.InvalidArgument, "Invalid token", herror.AuthInvalidTokenError, identity.IdentityManagement_ServiceDesc.ServiceName, nil).Err()
+	}
+
+	db, err := db.GetDBPoolConn()
+	if err != nil {
+		log.Err(err).Msg("Error getting db connection")
+		return nil, herror.StatusWithInfo(codes.Internal, "Error getting db connection", herror.DatabaseError, identity.IdentityManagement_ServiceDesc.ServiceName, nil).Err()
+	}
+
+	tx, err := db.Begin(ctx)
+	if err != nil {
+		log.Err(err).Msg("Error starting transaction")
+		return nil, herror.StatusWithInfo(codes.Internal, "Error starting transaction", herror.DatabaseTxError, identity.IdentityManagement_ServiceDesc.ServiceName, nil).Err()
+	}
+	_, err = tx.Exec(ctx, "DELETE FROM users.user_session WHERE id = $1", id)
+	if err != nil {
+		log.Err(err).Msg("Error deleting user session")
+		return nil, herror.StatusWithInfo(codes.Internal, "Error deleting user session", herror.DatabaseError, identity.IdentityManagement_ServiceDesc.ServiceName, nil).Err()
+	}
+
+	return &emptypb.Empty{}, nil
 }
 
 func (IdentityServer) Register(ctx context.Context, registerRequest *identity.RegisterRequest) (*emptypb.Empty, error) {
