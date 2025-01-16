@@ -1,0 +1,29 @@
+{
+  "id": "{{ faker.random.uuid }}",
+  "name": "{{ faker.name.last_name }}",
+  "photo": "Oregon",
+  "stand": "Automotive Licensed Plastic Hat Spurs",
+  "address": "Senior FTP Taka",
+  "description": "monetize service-desk data-warehouse",
+  "interests": [
+    {
+      "id": "{{ faker.random.uuid }}",
+      "name": "{{ faker.name.last_name }}"
+    },
+    {
+      "id": "{{ faker.random.uuid }}",
+      "name": "{{ faker.name.last_name }}"
+    }
+  ],
+  "contractTypes": [
+    {
+      "id": "{{ faker.random.uuid }}",
+      "name": "{{ faker.name.last_name }}"
+    },
+    {
+      "id": "{{ faker.random.uuid }}",
+      "name": "{{ faker.name.last_name }}"
+    }
+  ],
+  "visited": false
+}

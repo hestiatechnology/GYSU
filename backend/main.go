@@ -20,9 +20,12 @@ import (
 	//"hestia/api/pb/idmanagement"
 	//"hestia/api/pb/invoicing"
 	//"hestia/api/pb/textile"
+	"hestia/jobfair/api/interceptor"
 	"hestia/jobfair/api/methods/scompany"
+	"hestia/jobfair/api/methods/sidentity"
 
 	"hestia/jobfair/api/pb/company"
+	"hestia/jobfair/api/pb/identity"
 	"hestia/jobfair/api/utils/db"
 
 	"github.com/rs/zerolog"
@@ -31,6 +34,10 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
+
+func isDevMode() bool {
+	return strings.ToLower(os.Getenv("ENV")) == "dev" || len(os.Args) > 1 && strings.ToLower(os.Args[1]) == "--dev"
+}
 
 func checkPrerequisites() error {
 	dbUser := os.Getenv("PGUSER")
@@ -90,10 +97,9 @@ func main() {
 		log.Fatal().Err(err).Msg("failed to listen")
 	}
 	log.Info().Int("port", PORT).Msg("Server listening")
-	log.Warn().Msg("ADD INTERCEPTORS, DO NOT FORGET TO ADD THEM")
-	s := grpc.NewServer( /*grpc.ChainUnaryInterceptor(interceptor.AuthInterceptor, interceptor.CompanyInterceptor)*/ )
+	s := grpc.NewServer(grpc.ChainUnaryInterceptor(interceptor.AuthInterceptor))
 
-	if strings.ToLower(os.Getenv("ENV")) == "dev" || len(os.Args) > 1 && os.Args[1] == "--dev" {
+	if isDevMode() {
 		log.Info().Msg("Running in development mode")
 		log.Info().Msg("Registering reflection service")
 		reflection.Register(s)
@@ -110,19 +116,10 @@ func main() {
 
 	// Service registration
 	log.Info().Msg("Registering services")
-	//log.Info().Msg("Registering Identity Management service")
-	//idmanagement.RegisterIdentityManagementServer(s, &idm.IdentityManagementServer{})
-	//log.Info().Msg("Registering Textile service")
-	//textile.RegisterTextileServer(s, &mtextile.TextileServer{})
-	//log.Info().Msg("Registering Company Management service")
-	//company.RegisterCompanyManagementServer(s, &mcompany.CompanyManagementServer{})
-	//log.Info().Msg("Registering Accounting Tax service")
-	//accounting.RegisterTaxServer(s, &maccounting.TaxServer{})
-	//log.Info().Msg("Registering Invoicing service")
-	//invoicing.RegisterInvoicingServer(s, &minvoicing.InvoiceServer{})
-	// Register Company service
 	log.Info().Msg("Registering Company service")
 	company.RegisterCompanyServiceServer(s, &scompany.CompanyServer{})
+	log.Info().Msg("Registering Identity Management service")
+	identity.RegisterIdentityManagementServer(s, &sidentity.IdentityServer{})
 	if err := s.Serve(lis); err != nil {
 		log.Fatal().Err(err).Msg("failed to serve")
 	}

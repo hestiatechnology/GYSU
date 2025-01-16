@@ -7,7 +7,7 @@ require github.com/rs/zerolog v1.33.0
 require google.golang.org/genproto v0.0.0-20250106144421-5f5ef82da422
 
 require (
-	github.com/google/uuid v1.6.0 // indirect
+	github.com/google/uuid v1.6.0
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/pgx/v5 v5.7.2

@@ -25,12 +25,13 @@ message Location {
 message Company {
     optional string id = 1;
     string name = 2;
-    string stand = 3;
-    string address = 4;
-    string description = 5;
-    repeated hestia.jobfair.v1.common.Interest interests = 6;
-    repeated hestia.jobfair.v1.common.ContractType contractTypes = 7;
-    bool visited = 8;
+    optional string photo = 3;
+    string stand = 4;
+    string address = 5;
+    string description = 6;
+    repeated hestia.jobfair.v1.common.Interest interests = 7;
+    repeated hestia.jobfair.v1.common.ContractType contractTypes = 8;
+    bool visited = 9;
 }
 
 message ListCompaniesResponse {

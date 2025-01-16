@@ -21,8 +21,9 @@ service Events {
 message Speaker {
     optional string id = 1;
     string name = 2;
-    string description = 3;
-    string photo = 4;
+    string position = 3;
+    string company = 4;
+    optional string photo = 5;
 }
 
 message Event {

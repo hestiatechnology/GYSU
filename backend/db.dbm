@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.1.6" use-changelog="false" max-obj-count="13"
+<dbmodel pgmodeler-ver="1.1.6" use-changelog="false" max-obj-count="16"
 	 last-position="0,-95" last-zoom="0.75" scene-rect="-228,-127,2543.05,1203.8"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
@@ -61,7 +61,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<schema name="public"/>
 </extension>
 
-<table name="users" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+<table name="users" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
 	<schema name="users"/>
 	<role name="postgres"/>
 	<position x="520" y="-40"/>
@@ -80,11 +80,21 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="description">
 		<type name="text" length="0"/>
 	</column>
+	<column name="role" not-null="true" default-value="'student'">
+		<type name="text" length="0"/>
+	</column>
+	<column name="photo">
+		<type name="text" length="0"/>
+		<comment> <![CDATA[B2 Key]]> </comment>
+	</column>
 	<constraint name="pk_users" type="pk-constr" table="users.users">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 	<constraint name="uq_users_email" type="uq-constr" table="users.users">
 		<columns names="email" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="chk_user_role" type="ck-constr" table="users.users">
+			<expression> <![CDATA[role IN ('admin', 'voluntary',  'company', 'student')]]> </expression>
 	</constraint>
 </table>
 
@@ -109,7 +119,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="speaker" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+<table name="speaker" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="events"/>
 	<role name="postgres"/>
 	<position x="2040" y="140"/>
@@ -123,6 +133,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="text" length="0"/>
 	</column>
 	<column name="company" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="photo">
 		<type name="text" length="0"/>
 	</column>
 	<constraint name="pk_speaker" type="pk-constr" table="events.speaker">
@@ -247,6 +260,84 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
+<table name="user_education" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
+	<schema name="users"/>
+	<role name="postgres"/>
+	<position x="-60" y="-20"/>
+	<column name="id" not-null="true" default-value="gen_random_uuid()">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="school" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="course" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="start_date">
+		<type name="date" length="0"/>
+	</column>
+	<column name="end_date">
+		<type name="date" length="0"/>
+	</column>
+	<column name="info">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="pk_user_education" type="pk-constr" table="users.user_education">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="user_experience" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
+	<schema name="users"/>
+	<role name="postgres"/>
+	<position x="-160" y="240"/>
+	<column name="id" not-null="true" default-value="gen_random_uuid()">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="company" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="position" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="start_date">
+		<type name="date" length="0"/>
+	</column>
+	<column name="end_date">
+		<type name="date" length="0"/>
+	</column>
+	<column name="info">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="pk_user_experience" type="pk-constr" table="users.user_experience">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="user_session" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="users"/>
+	<role name="postgres"/>
+	<position x="940" y="-40"/>
+	<column name="id" not-null="true" default-value="gen_random_uuid()">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="expiry_date" not-null="true" default-value="CURRENT_TIMESTAMP + '30 days'">
+		<type name="timestamptz" length="0"/>
+	</column>
+	<constraint name="pk_user_session" type="pk-constr" table="users.user_session">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
 <constraint name="fk_event_speaker_event" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="events.event" table="events.event_speaker">
 	<columns names="event_id" ref-type="src-columns"/>
@@ -304,6 +395,24 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <constraint name="fk_users_contract_type_contract_type" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="common.contract_type" table="users.users_contract_type">
 	<columns names="contract_type_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_user_education_user" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="users.users" table="users.user_education">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_user_experience_user" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="users.users" table="users.user_experience">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_user_session_user" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="users.users" table="users.user_session">
+	<columns names="user_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
@@ -365,6 +474,24 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 custom-color="#48c4b6"
 	 src-table="users.users_contract_type"
 	 dst-table="common.contract_type" reference-fk="fk_users_contract_type_contract_type"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_user_education_users" type="relfk" layers="0"
+	 custom-color="#85c0f4"
+	 src-table="users.user_education"
+	 dst-table="users.users" reference-fk="fk_user_education_user"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_user_experience_users" type="relfk" layers="0"
+	 custom-color="#90faf0"
+	 src-table="users.user_experience"
+	 dst-table="users.users" reference-fk="fk_user_experience_user"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_user_session_users" type="relfk" layers="0"
+	 custom-color="#4d2815"
+	 src-table="users.user_session"
+	 dst-table="users.users" reference-fk="fk_user_session_user"
 	 src-required="false" dst-required="true"/>
 
 </dbmodel>

@@ -1,0 +1,26 @@
+{
+  "id": "{{ faker.random.uuid }}",
+  "name": "{{ faker.name.last_name }}",
+  "speakers": [
+    {
+      "id": "{{ faker.random.uuid }}",
+      "name": "{{ faker.name.last_name }}",
+      "position": "Kroon Checking Account capacitor",
+      "company": "24/365 Central",
+      "photo": "District invoice"
+    },
+    {
+      "id": "{{ faker.random.uuid }}",
+      "name": "{{ faker.name.last_name }}",
+      "position": "Generic Fresh Hat IB",
+      "company": "Handmade Ergonomic Rubber Bike",
+      "photo": "embrace deposit"
+    }
+  ],
+  "description": "Route",
+  "location": "Ports repurpose 5th generation",
+  "startTime": "1970-01-01T00:03:15.000000164Z",
+  "endTime": "1970-01-01T00:14:17.000000776Z",
+  "seats": 754,
+  "info": "experiences mesh"
+}

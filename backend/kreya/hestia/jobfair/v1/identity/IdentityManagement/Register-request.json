@@ -1,0 +1,46 @@
+{
+  "user": {
+    "name": "{{ faker.name.last_name }}",
+    "email": "{{ faker.internet.example_email }}",
+    "photo": "Savings Account turn-key",
+    "description": "SMS Shoes, Grocery & Toys Lithuania",
+    "interests": [
+      {
+        "id": "{{ faker.random.uuid }}",
+        "name": "{{ faker.name.last_name }}"
+      },
+      {
+        "id": "{{ faker.random.uuid }}",
+        "name": "{{ faker.name.last_name }}"
+      }
+    ],
+    "contractTypes": [
+      {
+        "id": "{{ faker.random.uuid }}",
+        "name": "{{ faker.name.last_name }}"
+      },
+      {
+        "id": "{{ faker.random.uuid }}",
+        "name": "{{ faker.name.last_name }}"
+      }
+    ]
+  },
+  "password": "{{ faker.internet.password }}",
+  "education": {
+    "school": "Open-architected",
+    "degree": "users",
+    "alumni": true,
+    "year": 181,
+    "startDate": {
+      "year": 52,
+      "month": 454,
+      "day": 888
+    },
+    "endDate": {
+      "year": 596,
+      "month": 200,
+      "day": 196
+    },
+    "info": "deposit Facilitator"
+  }
+}

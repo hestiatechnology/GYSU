@@ -26,9 +26,10 @@ message LoginResponse {
 message User {
     string name = 1;
     string email = 2;
-    optional string description = 3;
-    repeated hestia.jobfair.v1.common.Interest interests = 4;
-    repeated hestia.jobfair.v1.common.ContractType contractTypes = 5;
+    optional string photo = 3;
+    optional string description = 4;
+    repeated hestia.jobfair.v1.common.Interest interests = 5;
+    repeated hestia.jobfair.v1.common.ContractType contractTypes = 6;
 }
 
 message RegisterRequest {

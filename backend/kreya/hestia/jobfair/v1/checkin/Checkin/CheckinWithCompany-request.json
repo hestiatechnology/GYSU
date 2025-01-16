@@ -1,0 +1,4 @@
+{
+  "token": "wireless reciprocal",
+  "companyId": "{{ faker.random.uuid }}"
+}
