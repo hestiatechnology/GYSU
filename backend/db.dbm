@@ -4,7 +4,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
 <dbmodel pgmodeler-ver="1.1.6" use-changelog="false" max-obj-count="16"
-	 last-position="0,-95" last-zoom="0.75" scene-rect="-228,-127,2543.05,1203.8"
+	 last-position="-171,-95" last-zoom="0.75" scene-rect="-228,-127,2723.05,1203.8"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -101,7 +101,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="event" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
 	<schema name="events"/>
 	<role name="postgres"/>
-	<position x="1220" y="140"/>
+	<position x="1360" y="-40"/>
 	<column name="id" not-null="true" default-value="gen_random_uuid()">
 		<type name="uuid" length="0"/>
 	</column>
@@ -122,7 +122,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="speaker" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="events"/>
 	<role name="postgres"/>
-	<position x="2040" y="140"/>
+	<position x="2180" y="-40"/>
 	<column name="id" not-null="true" default-value="gen_random_uuid()">
 		<type name="uuid" length="0"/>
 	</column>
@@ -146,7 +146,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="event_speaker" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="events"/>
 	<role name="postgres"/>
-	<position x="1580" y="140"/>
+	<position x="1720" y="-40"/>
 	<column name="event_id" not-null="true">
 		<type name="uuid" length="0"/>
 	</column>
@@ -182,7 +182,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="attendance" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
 	<schema name="events"/>
 	<role name="postgres"/>
-	<position x="1580" y="360"/>
+	<position x="1720" y="180"/>
 	<column name="event_id" not-null="true">
 		<type name="uuid" length="0"/>
 	</column>

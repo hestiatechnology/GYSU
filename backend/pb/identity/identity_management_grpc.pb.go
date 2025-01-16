@@ -31,7 +31,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type IdentityManagementClient interface {
-	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*common.Token, error)
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Alive(ctx context.Context, in *common.Token, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Logout(ctx context.Context, in *common.Token, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -45,9 +45,9 @@ func NewIdentityManagementClient(cc grpc.ClientConnInterface) IdentityManagement
 	return &identityManagementClient{cc}
 }
 
-func (c *identityManagementClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+func (c *identityManagementClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*common.Token, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LoginResponse)
+	out := new(common.Token)
 	err := c.cc.Invoke(ctx, IdentityManagement_Login_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -89,7 +89,7 @@ func (c *identityManagementClient) Logout(ctx context.Context, in *common.Token,
 // All implementations must embed UnimplementedIdentityManagementServer
 // for forward compatibility.
 type IdentityManagementServer interface {
-	Login(context.Context, *LoginRequest) (*LoginResponse, error)
+	Login(context.Context, *LoginRequest) (*common.Token, error)
 	Register(context.Context, *RegisterRequest) (*emptypb.Empty, error)
 	Alive(context.Context, *common.Token) (*emptypb.Empty, error)
 	Logout(context.Context, *common.Token) (*emptypb.Empty, error)
@@ -103,7 +103,7 @@ type IdentityManagementServer interface {
 // pointer dereference when methods are called.
 type UnimplementedIdentityManagementServer struct{}
 
-func (UnimplementedIdentityManagementServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
+func (UnimplementedIdentityManagementServer) Login(context.Context, *LoginRequest) (*common.Token, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
 func (UnimplementedIdentityManagementServer) Register(context.Context, *RegisterRequest) (*emptypb.Empty, error) {
