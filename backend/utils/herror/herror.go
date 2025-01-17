@@ -11,6 +11,11 @@ const (
 	InternalError = "INTERNAL_ERROR"
 )
 
+const (
+	RequiredFieldError = "REQUIRED_FIELD"
+	InvalidFieldError  = "INVALID_FIELD"
+)
+
 // Database Errors
 const (
 	DatabaseError        = "DB_ERROR"
@@ -37,6 +42,15 @@ const (
 const (
 	UserAlreadyExists = "USER_ALREADY_EXISTS"
 	InvalidUser       = "INVALID_USER"
+)
+
+// Interest & Contract Types Errors
+const (
+	InterestAlreadyExists = "INTEREST_ALREADY_EXISTS"
+	InvalidInterest       = "INVALID_INTEREST"
+
+	ContractTypeAlreadyExists = "CONTRACT_TYPE_ALREADY_EXISTS"
+	InvalidContractType       = "INVALID_CONTRACT_TYPE"
 )
 
 // Company Errors
