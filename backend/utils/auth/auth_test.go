@@ -45,7 +45,7 @@ func TestVerifyAuthToken(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, e := VerifyAuthToken(tt.args.ctx, tt.args.token)
+			_, _, e := VerifyAuthToken(tt.args.ctx, tt.args.token)
 			if (e != nil) != tt.wantErr {
 				t.Errorf("VerifyAuthToken() error = %v, wantErr %v", e, tt.wantErr)
 			}

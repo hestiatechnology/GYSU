@@ -13,21 +13,28 @@ service IdentityManagement {
     rpc Logout (hestia.jobfair.v1.common.Token) returns (google.protobuf.Empty);
 }
 
-service UserManagement {
-    rpc GetUsers (google.protobuf.Empty) returns (repeated User);
-    rpc GetUser (hestia.jobfair.v1.common.Id) returns (User);
-    rpc UpdateUser (User) returns (google.protobuf.Empty);
-    rpc AddExperience (Experience) returns (google.protobuf.Empty);
-    rpc AddEducation (Education) returns (google.protobuf.Empty);
-    rpc GetExperiences (hestia.jobfair.v1.common.Id) returns (Experience);
-    rpc GetEducations (hestia.jobfair.v1.common.Id) returns (Education);
-    rpc DeleteExperience (hestia.jobfair.v1.common.Id) returns (google.protobuf.Empty);
-    rpc DeleteEducation (hestia.jobfair.v1.common.Id) returns (google.protobuf.Empty);
-}
-
 message LoginRequest {
     string email = 1;
     string password = 2;
+}
+
+message RegisterRequest {
+    User user = 1;
+    string password = 2;
+    optional Education education = 3;
+}
+
+service UserManagement {
+    rpc GetUsers (google.protobuf.Empty) returns (UserList);
+    rpc GetUser (hestia.jobfair.v1.common.Id) returns (User);
+    rpc UpdateUser (User) returns (google.protobuf.Empty);
+    rpc DeleteUser (hestia.jobfair.v1.common.Id) returns (google.protobuf.Empty);
+    rpc AddExperience (Experience) returns (google.protobuf.Empty);
+    rpc AddEducation (Education) returns (google.protobuf.Empty);
+    rpc GetExperiences (hestia.jobfair.v1.common.Id) returns (ExperienceList);
+    rpc GetEducations (hestia.jobfair.v1.common.Id) returns (EducationList);
+    rpc DeleteExperience (hestia.jobfair.v1.common.Id) returns (google.protobuf.Empty);
+    rpc DeleteEducation (hestia.jobfair.v1.common.Id) returns (google.protobuf.Empty);
 }
 
 message User {
@@ -37,12 +44,6 @@ message User {
     optional string description = 4;
     repeated hestia.jobfair.v1.common.Interest interests = 5;
     repeated hestia.jobfair.v1.common.ContractType contractTypes = 6;
-}
-
-message RegisterRequest {
-    User user = 1;
-    string password = 2;
-    optional Education education = 3;
 }
 
 message Education {
@@ -64,5 +65,15 @@ message Experience {
     optional string info = 5;
 }
 
+message UserList {
+    hestia.jobfair.v1.common.Pagination pagination = 1;
+    repeated User users = 2;
+}
 
+message ExperienceList {
+    repeated Experience experiences = 1;
+}
 
+message EducationList {
+    repeated Education educations = 1;
+}

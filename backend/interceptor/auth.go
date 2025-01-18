@@ -14,10 +14,6 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-type ctxKey string
-
-const UserIdKey ctxKey = "user_id"
-
 // AuthInterceptor is a gRPC interceptor that checks for a valid token in the metadata
 func AuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
 	// Methods to not check
@@ -51,7 +47,7 @@ func AuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo, h
 
 		return nil, status.Error(codes.InvalidArgument, "Invalid token")
 	}
-	userId, err := auth.VerifyAuthToken(ctx, token)
+	userId, role, err := auth.VerifyAuthToken(ctx, token)
 	if err != nil {
 		if errors.Is(err, auth.ErrInvalidToken) {
 			return nil, herror.StatusWithInfo(codes.Unauthenticated, "Invalid token", herror.AuthInvalidTokenError, info.FullMethod, nil).Err()
@@ -62,7 +58,8 @@ func AuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo, h
 		return nil, herror.StatusWithInfo(codes.Internal, "failed to verify token", herror.AuthInvalidTokenError, info.FullMethod, nil).Err()
 	}
 
-	ctx = context.WithValue(ctx, UserIdKey, userId)
+	ctx = context.WithValue(ctx, auth.UserIdKey, userId)
+	ctx = context.WithValue(ctx, auth.RoleKey, role)
 
 	// continue on
 	return handler(ctx, req)
