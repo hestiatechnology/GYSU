@@ -12,7 +12,7 @@ type UserServer struct {
 	identity.UnimplementedUserManagementServer
 }
 
-func (UserServer) GetUsers(context.Context, *emptypb.Empty) (*identity.UserList, error) {
+func (UserServer) GetUsers(context.Context, *common.TimePagination) (*identity.UserList, error) {
 	return nil, nil
 }
 

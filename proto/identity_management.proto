@@ -29,7 +29,7 @@ message RegisterRequest {
 
 service UserManagement {
     rpc GetUsers (google.protobuf.Empty) returns (UserList);
-    rpc GetUser (hestia.jobfair.v1.common.Id) returns (User);
+    rpc GetUser (hestia.jobfair.v1.common.TimePagination) returns (User);
     rpc SearchUsers (SearchUsersRequest) returns (UserList);
     rpc UpdateUser (User) returns (google.protobuf.Empty);
     rpc DeleteUser (hestia.jobfair.v1.common.Id) returns (google.protobuf.Empty);

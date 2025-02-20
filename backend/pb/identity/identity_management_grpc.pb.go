@@ -255,7 +255,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserManagementClient interface {
 	GetUsers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*UserList, error)
-	GetUser(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*User, error)
+	GetUser(ctx context.Context, in *common.TimePagination, opts ...grpc.CallOption) (*User, error)
 	SearchUsers(ctx context.Context, in *SearchUsersRequest, opts ...grpc.CallOption) (*UserList, error)
 	UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeleteUser(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -285,7 +285,7 @@ func (c *userManagementClient) GetUsers(ctx context.Context, in *emptypb.Empty, 
 	return out, nil
 }
 
-func (c *userManagementClient) GetUser(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*User, error) {
+func (c *userManagementClient) GetUser(ctx context.Context, in *common.TimePagination, opts ...grpc.CallOption) (*User, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(User)
 	err := c.cc.Invoke(ctx, UserManagement_GetUser_FullMethodName, in, out, cOpts...)
@@ -390,7 +390,7 @@ func (c *userManagementClient) DeleteEducation(ctx context.Context, in *common.I
 // for forward compatibility.
 type UserManagementServer interface {
 	GetUsers(context.Context, *emptypb.Empty) (*UserList, error)
-	GetUser(context.Context, *common.Id) (*User, error)
+	GetUser(context.Context, *common.TimePagination) (*User, error)
 	SearchUsers(context.Context, *SearchUsersRequest) (*UserList, error)
 	UpdateUser(context.Context, *User) (*emptypb.Empty, error)
 	DeleteUser(context.Context, *common.Id) (*emptypb.Empty, error)
@@ -413,7 +413,7 @@ type UnimplementedUserManagementServer struct{}
 func (UnimplementedUserManagementServer) GetUsers(context.Context, *emptypb.Empty) (*UserList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUsers not implemented")
 }
-func (UnimplementedUserManagementServer) GetUser(context.Context, *common.Id) (*User, error) {
+func (UnimplementedUserManagementServer) GetUser(context.Context, *common.TimePagination) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
 func (UnimplementedUserManagementServer) SearchUsers(context.Context, *SearchUsersRequest) (*UserList, error) {
@@ -483,7 +483,7 @@ func _UserManagement_GetUsers_Handler(srv interface{}, ctx context.Context, dec 
 }
 
 func _UserManagement_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(common.Id)
+	in := new(common.TimePagination)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -495,7 +495,7 @@ func _UserManagement_GetUser_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: UserManagement_GetUser_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServer).GetUser(ctx, req.(*common.Id))
+		return srv.(UserManagementServer).GetUser(ctx, req.(*common.TimePagination))
 	}
 	return interceptor(ctx, in, info, handler)
 }
