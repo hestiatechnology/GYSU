@@ -1,4 +1,4 @@
-syntax = "proto3";
+edition = "2023";
 
 package hestia.jobfair.v1.events;
 import "google/protobuf/empty.proto";
@@ -19,15 +19,15 @@ service Events {
 }
 
 message Speaker {
-    optional string id = 1;
+    string id = 1 [features.field_presence = EXPLICIT];
     string name = 2;
     string position = 3;
     string company = 4;
-    optional string photo = 5;
+    string photo = 5 [features.field_presence = EXPLICIT];
 }
 
 message Event {
-    optional string id = 1;
+    string id = 1 [features.field_presence = EXPLICIT];
     string name = 2;
     repeated Speaker speakers = 3;
     string description = 4;

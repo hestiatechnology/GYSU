@@ -1,4 +1,4 @@
-syntax = "proto3";
+edition = "2023";
 
 package hestia.jobfair.v1.checkin;
 import "google/protobuf/empty.proto";
@@ -22,7 +22,7 @@ message CheckinRequest {
     // token from the QR code
     string token = 1;
     // if event_id is not empty, the check-in will be associated with the event
-    optional string event_id = 2;
+    string event_id = 2 [features.field_presence = EXPLICIT];
 }
 
 message CheckinWithCompanyRequest {

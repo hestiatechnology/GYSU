@@ -1,4 +1,4 @@
-syntax = "proto3";
+edition = "2023";
 
 package hestia.jobfair.v1.common;
 option go_package = "hestia/jobfair/api/pb/common";

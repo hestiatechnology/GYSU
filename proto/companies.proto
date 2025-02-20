@@ -1,4 +1,4 @@
-syntax = "proto3";
+edition = "2023";
 
 package hestia.jobfair.v1.company;
 import "google/protobuf/empty.proto";
@@ -23,9 +23,9 @@ message Location {
 }
 
 message Company {
-    optional string id = 1;
+    string id = 1 [features.field_presence = EXPLICIT];
     string name = 2;
-    optional string photo = 3;
+    string photo = 3 [features.field_presence = EXPLICIT];
     string stand = 4;
     string address = 5;
     string description = 6;

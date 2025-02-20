@@ -1,4 +1,4 @@
-syntax = "proto3";
+edition = "2023";
 
 package hestia.jobfair.v1.identity;
 import "google/protobuf/empty.proto";
@@ -21,7 +21,7 @@ message LoginRequest {
 message RegisterRequest {
     User user = 1;
     string password = 2;
-    optional Education education = 3;
+    Education education = 3 [features.field_presence = EXPLICIT];
 }
 
 service UserManagement {
@@ -40,8 +40,8 @@ service UserManagement {
 message User {
     string name = 1;
     string email = 2;
-    optional string photo = 3;
-    optional string description = 4;
+    string photo = 3 [features.field_presence = EXPLICIT];
+    string description = 4 [features.field_presence = EXPLICIT];
     repeated hestia.jobfair.v1.common.Interest interests = 5;
     repeated hestia.jobfair.v1.common.ContractType contractTypes = 6;
 }
@@ -52,17 +52,17 @@ message Education {
     bool alumni = 3;
     // if year is set then its the current education
     int32 year = 4;
-    optional google.type.Date start_date = 5;
-    optional google.type.Date end_date = 6;
-    optional string info = 7;
+    google.type.Date start_date = 5 [features.field_presence = EXPLICIT];
+    google.type.Date end_date = 6 [features.field_presence = EXPLICIT];
+    string info = 7 [features.field_presence = EXPLICIT];
 }
 
 message Experience {
     string company = 1;
     string position = 2;
-    optional google.type.Date start_date = 3;
-    optional google.type.Date end_date = 4;
-    optional string info = 5;
+    google.type.Date start_date = 3 [features.field_presence = EXPLICIT];
+    google.type.Date end_date = 4 [features.field_presence = EXPLICIT];
+    string info = 5 [features.field_presence = EXPLICIT];
 }
 
 message UserList {
