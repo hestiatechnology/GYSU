@@ -97,7 +97,9 @@ func (IdentityServer) Login(ctx context.Context, loginRequest *identity.LoginReq
 		return nil, herror.StatusWithInfo(codes.Internal, "Error committing transaction", herror.DatabaseTxError, identity.IdentityManagement_ServiceDesc.ServiceName, nil).Err()
 	}
 
-	return &common.Token{Token: sessionId.String()}, nil
+	token := &common.Token{}
+	token.SetToken(sessionId.String())
+	return token, nil
 }
 
 func (IdentityServer) Logout(ctx context.Context, token *common.Token) (*emptypb.Empty, error) {
