@@ -6,6 +6,9 @@ import "google/protobuf/timestamp.proto";
 import "common.proto";
 option go_package = "hestia/jobfair/api/pb/events";
 
+import "google/protobuf/go_features.proto";
+option features.(pb.go).api_level = API_OPAQUE;
+
 service Events {
     rpc CreateEvent(Event) returns (hestia.jobfair.v1.common.Id);
     rpc GetEvents(google.protobuf.Empty) returns (EventList);

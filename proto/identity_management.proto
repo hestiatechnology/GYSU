@@ -6,6 +6,9 @@ import "google/type/date.proto";
 import "common.proto";
 option go_package = "hestia/jobfair/api/pb/identity";
 
+import "google/protobuf/go_features.proto";
+option features.(pb.go).api_level = API_OPAQUE;
+
 service IdentityManagement {
     rpc Login (LoginRequest) returns (hestia.jobfair.v1.common.Token);
     rpc Register (RegisterRequest) returns (google.protobuf.Empty);
