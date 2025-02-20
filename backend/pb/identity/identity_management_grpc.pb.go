@@ -239,6 +239,7 @@ var IdentityManagement_ServiceDesc = grpc.ServiceDesc{
 const (
 	UserManagement_GetUsers_FullMethodName         = "/hestia.jobfair.v1.identity.UserManagement/GetUsers"
 	UserManagement_GetUser_FullMethodName          = "/hestia.jobfair.v1.identity.UserManagement/GetUser"
+	UserManagement_SearchUsers_FullMethodName      = "/hestia.jobfair.v1.identity.UserManagement/SearchUsers"
 	UserManagement_UpdateUser_FullMethodName       = "/hestia.jobfair.v1.identity.UserManagement/UpdateUser"
 	UserManagement_DeleteUser_FullMethodName       = "/hestia.jobfair.v1.identity.UserManagement/DeleteUser"
 	UserManagement_AddExperience_FullMethodName    = "/hestia.jobfair.v1.identity.UserManagement/AddExperience"
@@ -255,6 +256,7 @@ const (
 type UserManagementClient interface {
 	GetUsers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*UserList, error)
 	GetUser(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*User, error)
+	SearchUsers(ctx context.Context, in *SearchUsersRequest, opts ...grpc.CallOption) (*UserList, error)
 	UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeleteUser(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	AddExperience(ctx context.Context, in *Experience, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -287,6 +289,16 @@ func (c *userManagementClient) GetUser(ctx context.Context, in *common.Id, opts 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(User)
 	err := c.cc.Invoke(ctx, UserManagement_GetUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userManagementClient) SearchUsers(ctx context.Context, in *SearchUsersRequest, opts ...grpc.CallOption) (*UserList, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserList)
+	err := c.cc.Invoke(ctx, UserManagement_SearchUsers_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -379,6 +391,7 @@ func (c *userManagementClient) DeleteEducation(ctx context.Context, in *common.I
 type UserManagementServer interface {
 	GetUsers(context.Context, *emptypb.Empty) (*UserList, error)
 	GetUser(context.Context, *common.Id) (*User, error)
+	SearchUsers(context.Context, *SearchUsersRequest) (*UserList, error)
 	UpdateUser(context.Context, *User) (*emptypb.Empty, error)
 	DeleteUser(context.Context, *common.Id) (*emptypb.Empty, error)
 	AddExperience(context.Context, *Experience) (*emptypb.Empty, error)
@@ -402,6 +415,9 @@ func (UnimplementedUserManagementServer) GetUsers(context.Context, *emptypb.Empt
 }
 func (UnimplementedUserManagementServer) GetUser(context.Context, *common.Id) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
+}
+func (UnimplementedUserManagementServer) SearchUsers(context.Context, *SearchUsersRequest) (*UserList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchUsers not implemented")
 }
 func (UnimplementedUserManagementServer) UpdateUser(context.Context, *User) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
@@ -480,6 +496,24 @@ func _UserManagement_GetUser_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserManagementServer).GetUser(ctx, req.(*common.Id))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserManagement_SearchUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchUsersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserManagementServer).SearchUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserManagement_SearchUsers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserManagementServer).SearchUsers(ctx, req.(*SearchUsersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -642,6 +676,10 @@ var UserManagement_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUser",
 			Handler:    _UserManagement_GetUser_Handler,
+		},
+		{
+			MethodName: "SearchUsers",
+			Handler:    _UserManagement_SearchUsers_Handler,
 		},
 		{
 			MethodName: "UpdateUser",
