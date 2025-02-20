@@ -30,6 +30,7 @@ message RegisterRequest {
 service UserManagement {
     rpc GetUsers (google.protobuf.Empty) returns (UserList);
     rpc GetUser (hestia.jobfair.v1.common.Id) returns (User);
+    rpc SearchUsers (SearchUsersRequest) returns (UserList);
     rpc UpdateUser (User) returns (google.protobuf.Empty);
     rpc DeleteUser (hestia.jobfair.v1.common.Id) returns (google.protobuf.Empty);
     rpc AddExperience (Experience) returns (google.protobuf.Empty);
@@ -67,6 +68,13 @@ message Experience {
     google.type.Date end_date = 4 [features.field_presence = EXPLICIT];
     string info = 5 [features.field_presence = EXPLICIT];
 }
+
+// Automatically limited to 20
+message SearchUsersRequest {
+    string name = 1 [features.field_presence = EXPLICIT];
+    string email = 2 [features.field_presence = EXPLICIT]; 
+}
+
 
 message UserList {
     hestia.jobfair.v1.common.Pagination pagination = 1;
