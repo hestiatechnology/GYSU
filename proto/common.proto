@@ -1,6 +1,7 @@
 edition = "2023";
 
 package hestia.jobfair.v1.common;
+import "google/protobuf/timestamp.proto";
 option go_package = "hestia/jobfair/api/pb/common";
 
 import "google/protobuf/go_features.proto";
@@ -14,8 +15,8 @@ message Token {
     string token = 1;
 }
 
-message Pagination {
-    int32 page = 1;
+message TimePagination {
+    google.protobuf.Timestamp from_time = 1;
     int32 limit = 2;
 }
 

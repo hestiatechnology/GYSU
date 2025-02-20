@@ -4,7 +4,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
 <dbmodel pgmodeler-ver="1.1.6" use-changelog="false" max-obj-count="16"
-	 last-position="-171,-95" last-zoom="0.75" scene-rect="-228,-127,2723.05,1203.8"
+	 last-position="170,-89" last-zoom="0.75" scene-rect="-228,-127,2723.05,1203.8"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -61,7 +61,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<schema name="public"/>
 </extension>
 
-<table name="users" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
+<table name="users" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
 	<schema name="users"/>
 	<role name="postgres"/>
 	<position x="520" y="-40"/>
@@ -85,7 +85,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<column name="photo">
 		<type name="text" length="0"/>
-		<comment> <![CDATA[B2 Key]]> </comment>
+		<comment> <![CDATA[Object Key in B2]]> </comment>
+	</column>
+	<column name="cv">
+		<type name="text" length="0"/>
+		<comment> <![CDATA[Object Key in B2]]> </comment>
 	</column>
 	<constraint name="pk_users" type="pk-constr" table="users.users">
 		<columns names="id" ref-type="src-columns"/>

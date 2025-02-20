@@ -77,7 +77,7 @@ message SearchUsersRequest {
 
 
 message UserList {
-    hestia.jobfair.v1.common.Pagination pagination = 1;
+    hestia.jobfair.v1.common.TimePagination pagination = 1;
     repeated User users = 2;
 }
 
