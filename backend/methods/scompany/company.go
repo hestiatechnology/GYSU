@@ -2,20 +2,17 @@ package scompany
 
 import (
 	"context"
-	"hestia/jobfair/api/pb/common"
 	"hestia/jobfair/api/pb/company"
-
-	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type CompanyServer struct {
 	company.UnimplementedCompanyServiceServer
 }
 
-func (CompanyServer) CreateCompany(ctx context.Context, c *company.Company) (*common.Id, error) {
+func (CompanyServer) CreateCompany(ctx context.Context, req *company.CreateCompanyRequest) (*company.CreateCompanyResponse, error) {
 	return nil, nil
 }
-func (CompanyServer) GetCompanies(ctx context.Context, emptypb *emptypb.Empty) (*company.ListCompaniesResponse, error) {
+func (CompanyServer) GetCompanies(ctx context.Context, req *company.GetCompaniesRequest) (*company.GetCompaniesResponse, error) {
 	//db, err := db.GetDBPoolConn()
 	//if err != nil {
 	//	log.Err(err).Msg("Error getting db connection")
@@ -24,9 +21,9 @@ func (CompanyServer) GetCompanies(ctx context.Context, emptypb *emptypb.Empty) (
 
 	return nil, nil
 }
-func (CompanyServer) GetCompany(ctx context.Context, id *common.Id) (*company.Company, error) {
+func (CompanyServer) GetCompany(ctx context.Context, req *company.GetCompanyRequest) (*company.GetCompanyResponse, error) {
 	return nil, nil
 }
-func (CompanyServer) UpdateCompany(ctx context.Context, c *company.Company) (*emptypb.Empty, error) {
+func (CompanyServer) UpdateCompany(ctx context.Context, req *company.UpdateCompanyRequest) (*company.UpdateCompanyResponse, error) {
 	return nil, nil
 }

@@ -119,7 +119,7 @@ func main() {
 	log.Info().Msg("Registering Company service")
 	company.RegisterCompanyServiceServer(s, &scompany.CompanyServer{})
 	log.Info().Msg("Registering Identity Management service")
-	identity.RegisterIdentityManagementServer(s, &sidentity.IdentityServer{})
+	identity.RegisterIdentityManagementServiceServer(s, &sidentity.IdentityServer{})
 	if err := s.Serve(lis); err != nil {
 		log.Fatal().Err(err).Msg("failed to serve")
 	}

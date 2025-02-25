@@ -1,0 +1,8 @@
+version: v2
+plugins:
+  - local: protoc-gen-go
+    out: backend/
+    opt: module=hestia/jobfair/api
+  - local: protoc-gen-go-grpc
+    out: backend/
+    opt: module=hestia/jobfair/api

@@ -1,0 +1,84 @@
+edition = "2023";
+
+package hestia.jobfair.company.v1;
+
+import "google/protobuf/go_features.proto";
+import "hestia/jobfair/common/v1/common.proto";
+
+option features.(pb.go).api_level = API_OPAQUE;
+option go_package = "hestia/jobfair/api/pb/company";
+
+service CompanyService {
+  rpc CreateCompany(CreateCompanyRequest) returns (CreateCompanyResponse);
+  rpc GetCompanies(GetCompaniesRequest) returns (GetCompaniesResponse);
+  rpc GetCompany(GetCompanyRequest) returns (GetCompanyResponse);
+  rpc UpdateCompany(UpdateCompanyRequest) returns (UpdateCompanyResponse);
+  //rpc DeleteCompany(DeleteCompanyRequest) returns (DeleteCompanyResponse);
+  //rpc ListCompanies(ListCompaniesRequest) returns (ListCompaniesResponse);
+}
+
+message Location {
+  string address = 1;
+  string locality = 2;
+  string postal_code = 3;
+  // Must be a Alpha-2 code
+  string country = 4;
+}
+
+message Company {
+  string id = 1 [features.field_presence = IMPLICIT];
+  string name = 2 [features.field_presence = IMPLICIT];
+  string photo = 3;
+  string stand = 4;
+  string address = 5;
+  string description = 6 [features.field_presence = IMPLICIT];
+  repeated hestia.jobfair.common.v1.Interest interests = 7;
+  repeated hestia.jobfair.common.v1.ContractType contract_types = 8;
+  bool visited = 9;
+}
+
+message CreateCompanyRequest {
+  string name = 1;
+  string photo = 2 [features.field_presence = EXPLICIT];
+  string stand = 3;
+  Location address = 4;
+  string description = 5;
+  repeated hestia.jobfair.common.v1.Interest interests = 6;
+  repeated hestia.jobfair.common.v1.ContractType contract_types = 7;
+}
+
+message CreateCompanyResponse {
+  hestia.jobfair.common.v1.Id id = 1;
+}
+
+message GetCompaniesRequest {
+  message AlphabeticPagination {
+    string from_name = 1;
+    int32 limit = 2;
+  }
+  AlphabeticPagination alphabetic_pagination = 1;
+}
+
+message GetCompaniesResponse {
+  repeated Company companies = 1;
+}
+
+message GetCompanyRequest {
+  oneof company {
+    hestia.jobfair.common.v1.Id id = 1;
+    string name = 2;
+    uint32 stand = 3;
+  }
+}
+
+message GetCompanyResponse {
+  Company company = 1;
+}
+
+message UpdateCompanyRequest {
+  Company company = 1;
+}
+
+message UpdateCompanyResponse {
+  hestia.jobfair.common.v1.Id id = 1;
+}

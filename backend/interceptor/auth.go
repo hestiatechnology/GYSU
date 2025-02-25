@@ -18,10 +18,10 @@ import (
 func AuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
 	// Methods to not check
 	methods := []string{
-		identity.IdentityManagement_Alive_FullMethodName,
-		identity.IdentityManagement_Login_FullMethodName,
-		identity.IdentityManagement_Logout_FullMethodName,
-		identity.IdentityManagement_Register_FullMethodName,
+		identity.IdentityManagementService_Alive_FullMethodName,
+		identity.IdentityManagementService_Login_FullMethodName,
+		identity.IdentityManagementService_Logout_FullMethodName,
+		identity.IdentityManagementService_Register_FullMethodName,
 	}
 
 	// Check if the method is in the list of methods to not check

@@ -1,0 +1,43 @@
+edition = "2023";
+
+package hestia.jobfair.checkin.v1;
+
+import "google/protobuf/go_features.proto";
+import "hestia/jobfair/identity/v1/identity_management.proto";
+
+option features.(pb.go).api_level = API_OPAQUE;
+option go_package = "hestia/jobfair/api/pb/checkin";
+
+// Check-in is the feature that allows the user to check-in to the event and share their information with the companies
+service CheckinService {
+  rpc Checkin(CheckinRequest) returns (CheckinResponse);
+  rpc CheckinWithCompany(CheckinWithCompanyRequest) returns (CheckinWithCompanyResponse);
+  //rpc Empty(google.protobuf.Empty) returns (google.protobuf.Empty);
+  //rpc CreateCompany(Company) returns (hestia.jobfair.v1.common.Id);
+  //rpc GetCompanies(google.protobuf.Empty) returns (ListCompaniesResponse);
+  //rpc GetCompany(hestia.jobfair.v1.common.Id) returns (Company);
+  //rpc UpdateCompany(Company) returns (google.protobuf.Empty);
+  //rpc DeleteCompany(DeleteCompanyRequest) returns (DeleteCompanyResponse);
+  //rpc ListCompanies(ListCompaniesRequest) returns (ListCompaniesResponse);
+}
+
+message CheckinRequest {
+  // token from the QR code
+  string token = 1;
+  // if event_id is not empty, the check-in will be associated with the event
+  string event_id = 2 [features.field_presence = EXPLICIT];
+}
+
+message CheckinResponse {
+  hestia.jobfair.identity.v1.User user = 1;
+}
+
+message CheckinWithCompanyRequest {
+  // token from the QR code
+  string token = 1;
+  string company_id = 2;
+}
+
+message CheckinWithCompanyResponse {
+  hestia.jobfair.identity.v1.User user = 1;
+}
