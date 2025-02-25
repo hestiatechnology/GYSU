@@ -2,52 +2,43 @@ package sidentity
 
 import (
 	"context"
-	"hestia/jobfair/api/pb/common"
 	"hestia/jobfair/api/pb/identity"
-
-	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type UserServer struct {
-	identity.UnimplementedUserManagementServer
+	identity.UnimplementedUserManagementServiceServer
 }
 
-func (UserServer) GetUsers(context.Context, *common.TimePagination) (*identity.UserList, error) {
+func (UserServer) AddEducation(context.Context, *identity.AddEducationRequest) (*identity.AddEducationResponse, error) {
 	return nil, nil
 }
-
-func (UserServer) GetUser(context.Context, *common.Id) (*identity.User, error) {
+func (UserServer) AddExperience(context.Context, *identity.AddExperienceRequest) (*identity.AddExperienceResponse, error) {
 	return nil, nil
 }
-
-func (UserServer) UpdateUser(context.Context, *identity.User) (*emptypb.Empty, error) {
+func (UserServer) DeleteEducation(context.Context, *identity.DeleteEducationRequest) (*identity.DeleteEducationResponse, error) {
 	return nil, nil
 }
-
-func (UserServer) DeleteUser(context.Context, *common.Id) (*emptypb.Empty, error) {
+func (UserServer) DeleteExperience(context.Context, *identity.DeleteExperienceRequest) (*identity.DeleteExperienceResponse, error) {
 	return nil, nil
 }
-
-func (UserServer) GetEducations(context.Context, *common.Id) (*identity.EducationList, error) {
+func (UserServer) DeleteUser(context.Context, *identity.DeleteUserRequest) (*identity.DeleteUserResponse, error) {
 	return nil, nil
 }
-
-func (UserServer) GetExperiences(context.Context, *common.Id) (*identity.ExperienceList, error) {
+func (UserServer) GetEducations(context.Context, *identity.GetEducationsRequest) (*identity.GetEducationsResponse, error) {
 	return nil, nil
 }
-
-func (UserServer) AddEducation(context.Context, *identity.Education) (*emptypb.Empty, error) {
+func (UserServer) GetExperiences(context.Context, *identity.GetExperiencesRequest) (*identity.GetExperiencesResponse, error) {
 	return nil, nil
 }
-
-func (UserServer) AddExperience(context.Context, *identity.Experience) (*emptypb.Empty, error) {
+func (UserServer) GetUser(context.Context, *identity.GetUserRequest) (*identity.GetUserResponse, error) {
 	return nil, nil
 }
-
-func (UserServer) DeleteEducation(context.Context, *common.Id) (*emptypb.Empty, error) {
+func (UserServer) GetUsers(context.Context, *identity.GetUsersRequest) (*identity.GetUsersResponse, error) {
 	return nil, nil
 }
-
-func (UserServer) DeleteExperience(context.Context, *common.Id) (*emptypb.Empty, error) {
+func (UserServer) SearchUsers(context.Context, *identity.SearchUsersRequest) (*identity.SearchUsersResponse, error) {
+	return nil, nil
+}
+func (UserServer) UpdateUser(context.Context, *identity.UpdateUserRequest) (*identity.UpdateUserResponse, error) {
 	return nil, nil
 }

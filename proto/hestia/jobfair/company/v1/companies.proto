@@ -18,11 +18,11 @@ service CompanyService {
 }
 
 message Location {
-  string address = 1;
-  string locality = 2;
-  string postal_code = 3;
+  string address = 1 [features.field_presence = IMPLICIT];
+  string locality = 2 [features.field_presence = IMPLICIT];
+  string postal_code = 3 [features.field_presence = IMPLICIT];
   // Must be a Alpha-2 code
-  string country = 4;
+  string country = 4 [features.field_presence = IMPLICIT];
 }
 
 message Company {

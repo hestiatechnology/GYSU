@@ -2,7 +2,6 @@ edition = "2023";
 
 package hestia.jobfair.identity.v1;
 
-import "google/protobuf/empty.proto";
 import "google/protobuf/go_features.proto";
 import "google/type/date.proto";
 import "hestia/jobfair/common/v1/common.proto";
@@ -11,15 +10,19 @@ option features.(pb.go).api_level = API_OPAQUE;
 option go_package = "hestia/jobfair/api/pb/identity";
 
 service IdentityManagementService {
-  rpc Login(LoginRequest) returns (hestia.jobfair.common.v1.Token);
-  rpc Register(RegisterRequest) returns (google.protobuf.Empty);
-  rpc Alive(hestia.jobfair.common.v1.Token) returns (google.protobuf.Empty);
-  rpc Logout(hestia.jobfair.common.v1.Token) returns (google.protobuf.Empty);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Alive(AliveRequest) returns (AliveResponse);
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
 }
 
 message LoginRequest {
   string email = 1;
   string password = 2;
+}
+
+message LoginResponse {
+  hestia.jobfair.common.v1.Token token = 1;
 }
 
 message RegisterRequest {
@@ -28,19 +31,113 @@ message RegisterRequest {
   Education education = 3;
 }
 
-service UserManagement {
-  rpc GetUsers(google.protobuf.Empty) returns (UserList);
-  rpc GetUser(hestia.jobfair.common.v1.TimePagination) returns (User);
-  rpc SearchUsers(SearchUsersRequest) returns (UserList);
-  rpc UpdateUser(User) returns (google.protobuf.Empty);
-  rpc DeleteUser(hestia.jobfair.common.v1.Id) returns (google.protobuf.Empty);
-  rpc AddExperience(Experience) returns (google.protobuf.Empty);
-  rpc AddEducation(Education) returns (google.protobuf.Empty);
-  rpc GetExperiences(hestia.jobfair.common.v1.Id) returns (ExperienceList);
-  rpc GetEducations(hestia.jobfair.common.v1.Id) returns (EducationList);
-  rpc DeleteExperience(hestia.jobfair.common.v1.Id) returns (google.protobuf.Empty);
-  rpc DeleteEducation(hestia.jobfair.common.v1.Id) returns (google.protobuf.Empty);
+message RegisterResponse {}
+
+message AliveRequest {
+  hestia.jobfair.common.v1.Token token = 1;
 }
+
+message AliveResponse {}
+
+message LogoutRequest {
+  hestia.jobfair.common.v1.Token token = 1;
+}
+
+message LogoutResponse {}
+
+service UserManagementService {
+  rpc GetUsers(GetUsersRequest) returns (GetUsersResponse);
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  rpc SearchUsers(SearchUsersRequest) returns (SearchUsersResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+  rpc AddExperience(AddExperienceRequest) returns (AddExperienceResponse);
+  rpc AddEducation(AddEducationRequest) returns (AddEducationResponse);
+  rpc GetExperiences(GetExperiencesRequest) returns (GetExperiencesResponse);
+  rpc GetEducations(GetEducationsRequest) returns (GetEducationsResponse);
+  rpc DeleteExperience(DeleteExperienceRequest) returns (DeleteExperienceResponse);
+  rpc DeleteEducation(DeleteEducationRequest) returns (DeleteEducationResponse);
+}
+
+message GetUsersRequest {
+  hestia.jobfair.common.v1.TimePagination time_pagination = 1;
+}
+
+message GetUsersResponse {
+  hestia.jobfair.common.v1.TimePagination pagination = 1;
+  repeated User users = 2;
+}
+
+message GetUserRequest {
+  hestia.jobfair.common.v1.Id id = 1;
+}
+
+message GetUserResponse {
+  User user = 1;
+}
+
+message SearchUsersRequest {
+  oneof query {
+    string name = 1;
+    string email = 2;
+  }
+}
+
+message SearchUsersResponse {
+  repeated User users = 2;
+}
+
+message UpdateUserRequest {
+  User user = 1;
+}
+
+message UpdateUserResponse {}
+
+message DeleteUserRequest {
+  hestia.jobfair.common.v1.Id id = 1;
+}
+
+message DeleteUserResponse {}
+
+message AddExperienceRequest {
+  Experience experience = 1;
+}
+
+message AddExperienceResponse {}
+
+message AddEducationRequest {
+  Education education = 1;
+}
+
+message AddEducationResponse {}
+
+message GetExperiencesRequest {
+  hestia.jobfair.common.v1.Id id = 1;
+}
+
+message GetExperiencesResponse {
+  ExperienceList experience_list = 1;
+}
+
+message GetEducationsRequest {
+  hestia.jobfair.common.v1.Id id = 1;
+}
+
+message GetEducationsResponse {
+  EducationList education_list = 1;
+}
+
+message DeleteExperienceRequest {
+  hestia.jobfair.common.v1.Id id = 1;
+}
+
+message DeleteExperienceResponse {}
+
+message DeleteEducationRequest {
+  hestia.jobfair.common.v1.Id id = 1;
+}
+
+message DeleteEducationResponse {}
 
 message User {
   string name = 1;
@@ -48,7 +145,7 @@ message User {
   string photo = 3 [features.field_presence = EXPLICIT];
   string description = 4 [features.field_presence = EXPLICIT];
   repeated hestia.jobfair.common.v1.Interest interests = 5;
-  repeated hestia.jobfair.common.v1.ContractType contractTypes = 6;
+  repeated hestia.jobfair.common.v1.ContractType contract_types = 6;
 }
 
 message Education {
@@ -68,17 +165,6 @@ message Experience {
   google.type.Date start_date = 3 [features.field_presence = EXPLICIT];
   google.type.Date end_date = 4 [features.field_presence = EXPLICIT];
   string info = 5 [features.field_presence = EXPLICIT];
-}
-
-// Automatically limited to 20
-message SearchUsersRequest {
-  string name = 1 [features.field_presence = EXPLICIT];
-  string email = 2 [features.field_presence = EXPLICIT];
-}
-
-message UserList {
-  hestia.jobfair.common.v1.TimePagination pagination = 1;
-  repeated User users = 2;
 }
 
 message ExperienceList {

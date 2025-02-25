@@ -11,8 +11,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	common "hestia/jobfair/api/pb/common"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -31,10 +29,10 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type IdentityManagementServiceClient interface {
-	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*common.Token, error)
-	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	Alive(ctx context.Context, in *common.Token, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	Logout(ctx context.Context, in *common.Token, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
+	Alive(ctx context.Context, in *AliveRequest, opts ...grpc.CallOption) (*AliveResponse, error)
+	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error)
 }
 
 type identityManagementServiceClient struct {
@@ -45,9 +43,9 @@ func NewIdentityManagementServiceClient(cc grpc.ClientConnInterface) IdentityMan
 	return &identityManagementServiceClient{cc}
 }
 
-func (c *identityManagementServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*common.Token, error) {
+func (c *identityManagementServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(common.Token)
+	out := new(LoginResponse)
 	err := c.cc.Invoke(ctx, IdentityManagementService_Login_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -55,9 +53,9 @@ func (c *identityManagementServiceClient) Login(ctx context.Context, in *LoginRe
 	return out, nil
 }
 
-func (c *identityManagementServiceClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *identityManagementServiceClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(RegisterResponse)
 	err := c.cc.Invoke(ctx, IdentityManagementService_Register_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -65,9 +63,9 @@ func (c *identityManagementServiceClient) Register(ctx context.Context, in *Regi
 	return out, nil
 }
 
-func (c *identityManagementServiceClient) Alive(ctx context.Context, in *common.Token, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *identityManagementServiceClient) Alive(ctx context.Context, in *AliveRequest, opts ...grpc.CallOption) (*AliveResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(AliveResponse)
 	err := c.cc.Invoke(ctx, IdentityManagementService_Alive_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -75,9 +73,9 @@ func (c *identityManagementServiceClient) Alive(ctx context.Context, in *common.
 	return out, nil
 }
 
-func (c *identityManagementServiceClient) Logout(ctx context.Context, in *common.Token, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *identityManagementServiceClient) Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(LogoutResponse)
 	err := c.cc.Invoke(ctx, IdentityManagementService_Logout_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -89,10 +87,10 @@ func (c *identityManagementServiceClient) Logout(ctx context.Context, in *common
 // All implementations must embed UnimplementedIdentityManagementServiceServer
 // for forward compatibility.
 type IdentityManagementServiceServer interface {
-	Login(context.Context, *LoginRequest) (*common.Token, error)
-	Register(context.Context, *RegisterRequest) (*emptypb.Empty, error)
-	Alive(context.Context, *common.Token) (*emptypb.Empty, error)
-	Logout(context.Context, *common.Token) (*emptypb.Empty, error)
+	Login(context.Context, *LoginRequest) (*LoginResponse, error)
+	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
+	Alive(context.Context, *AliveRequest) (*AliveResponse, error)
+	Logout(context.Context, *LogoutRequest) (*LogoutResponse, error)
 	mustEmbedUnimplementedIdentityManagementServiceServer()
 }
 
@@ -103,16 +101,16 @@ type IdentityManagementServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedIdentityManagementServiceServer struct{}
 
-func (UnimplementedIdentityManagementServiceServer) Login(context.Context, *LoginRequest) (*common.Token, error) {
+func (UnimplementedIdentityManagementServiceServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedIdentityManagementServiceServer) Register(context.Context, *RegisterRequest) (*emptypb.Empty, error) {
+func (UnimplementedIdentityManagementServiceServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
-func (UnimplementedIdentityManagementServiceServer) Alive(context.Context, *common.Token) (*emptypb.Empty, error) {
+func (UnimplementedIdentityManagementServiceServer) Alive(context.Context, *AliveRequest) (*AliveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Alive not implemented")
 }
-func (UnimplementedIdentityManagementServiceServer) Logout(context.Context, *common.Token) (*emptypb.Empty, error) {
+func (UnimplementedIdentityManagementServiceServer) Logout(context.Context, *LogoutRequest) (*LogoutResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
 }
 func (UnimplementedIdentityManagementServiceServer) mustEmbedUnimplementedIdentityManagementServiceServer() {
@@ -174,7 +172,7 @@ func _IdentityManagementService_Register_Handler(srv interface{}, ctx context.Co
 }
 
 func _IdentityManagementService_Alive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(common.Token)
+	in := new(AliveRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -186,13 +184,13 @@ func _IdentityManagementService_Alive_Handler(srv interface{}, ctx context.Conte
 		FullMethod: IdentityManagementService_Alive_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IdentityManagementServiceServer).Alive(ctx, req.(*common.Token))
+		return srv.(IdentityManagementServiceServer).Alive(ctx, req.(*AliveRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _IdentityManagementService_Logout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(common.Token)
+	in := new(LogoutRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -204,7 +202,7 @@ func _IdentityManagementService_Logout_Handler(srv interface{}, ctx context.Cont
 		FullMethod: IdentityManagementService_Logout_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IdentityManagementServiceServer).Logout(ctx, req.(*common.Token))
+		return srv.(IdentityManagementServiceServer).Logout(ctx, req.(*LogoutRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -238,481 +236,481 @@ var IdentityManagementService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	UserManagement_GetUsers_FullMethodName         = "/hestia.jobfair.identity.v1.UserManagement/GetUsers"
-	UserManagement_GetUser_FullMethodName          = "/hestia.jobfair.identity.v1.UserManagement/GetUser"
-	UserManagement_SearchUsers_FullMethodName      = "/hestia.jobfair.identity.v1.UserManagement/SearchUsers"
-	UserManagement_UpdateUser_FullMethodName       = "/hestia.jobfair.identity.v1.UserManagement/UpdateUser"
-	UserManagement_DeleteUser_FullMethodName       = "/hestia.jobfair.identity.v1.UserManagement/DeleteUser"
-	UserManagement_AddExperience_FullMethodName    = "/hestia.jobfair.identity.v1.UserManagement/AddExperience"
-	UserManagement_AddEducation_FullMethodName     = "/hestia.jobfair.identity.v1.UserManagement/AddEducation"
-	UserManagement_GetExperiences_FullMethodName   = "/hestia.jobfair.identity.v1.UserManagement/GetExperiences"
-	UserManagement_GetEducations_FullMethodName    = "/hestia.jobfair.identity.v1.UserManagement/GetEducations"
-	UserManagement_DeleteExperience_FullMethodName = "/hestia.jobfair.identity.v1.UserManagement/DeleteExperience"
-	UserManagement_DeleteEducation_FullMethodName  = "/hestia.jobfair.identity.v1.UserManagement/DeleteEducation"
+	UserManagementService_GetUsers_FullMethodName         = "/hestia.jobfair.identity.v1.UserManagementService/GetUsers"
+	UserManagementService_GetUser_FullMethodName          = "/hestia.jobfair.identity.v1.UserManagementService/GetUser"
+	UserManagementService_SearchUsers_FullMethodName      = "/hestia.jobfair.identity.v1.UserManagementService/SearchUsers"
+	UserManagementService_UpdateUser_FullMethodName       = "/hestia.jobfair.identity.v1.UserManagementService/UpdateUser"
+	UserManagementService_DeleteUser_FullMethodName       = "/hestia.jobfair.identity.v1.UserManagementService/DeleteUser"
+	UserManagementService_AddExperience_FullMethodName    = "/hestia.jobfair.identity.v1.UserManagementService/AddExperience"
+	UserManagementService_AddEducation_FullMethodName     = "/hestia.jobfair.identity.v1.UserManagementService/AddEducation"
+	UserManagementService_GetExperiences_FullMethodName   = "/hestia.jobfair.identity.v1.UserManagementService/GetExperiences"
+	UserManagementService_GetEducations_FullMethodName    = "/hestia.jobfair.identity.v1.UserManagementService/GetEducations"
+	UserManagementService_DeleteExperience_FullMethodName = "/hestia.jobfair.identity.v1.UserManagementService/DeleteExperience"
+	UserManagementService_DeleteEducation_FullMethodName  = "/hestia.jobfair.identity.v1.UserManagementService/DeleteEducation"
 )
 
-// UserManagementClient is the client API for UserManagement service.
+// UserManagementServiceClient is the client API for UserManagementService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UserManagementClient interface {
-	GetUsers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*UserList, error)
-	GetUser(ctx context.Context, in *common.TimePagination, opts ...grpc.CallOption) (*User, error)
-	SearchUsers(ctx context.Context, in *SearchUsersRequest, opts ...grpc.CallOption) (*UserList, error)
-	UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	DeleteUser(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	AddExperience(ctx context.Context, in *Experience, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	AddEducation(ctx context.Context, in *Education, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	GetExperiences(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*ExperienceList, error)
-	GetEducations(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*EducationList, error)
-	DeleteExperience(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	DeleteEducation(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*emptypb.Empty, error)
+type UserManagementServiceClient interface {
+	GetUsers(ctx context.Context, in *GetUsersRequest, opts ...grpc.CallOption) (*GetUsersResponse, error)
+	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
+	SearchUsers(ctx context.Context, in *SearchUsersRequest, opts ...grpc.CallOption) (*SearchUsersResponse, error)
+	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
+	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
+	AddExperience(ctx context.Context, in *AddExperienceRequest, opts ...grpc.CallOption) (*AddExperienceResponse, error)
+	AddEducation(ctx context.Context, in *AddEducationRequest, opts ...grpc.CallOption) (*AddEducationResponse, error)
+	GetExperiences(ctx context.Context, in *GetExperiencesRequest, opts ...grpc.CallOption) (*GetExperiencesResponse, error)
+	GetEducations(ctx context.Context, in *GetEducationsRequest, opts ...grpc.CallOption) (*GetEducationsResponse, error)
+	DeleteExperience(ctx context.Context, in *DeleteExperienceRequest, opts ...grpc.CallOption) (*DeleteExperienceResponse, error)
+	DeleteEducation(ctx context.Context, in *DeleteEducationRequest, opts ...grpc.CallOption) (*DeleteEducationResponse, error)
 }
 
-type userManagementClient struct {
+type userManagementServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUserManagementClient(cc grpc.ClientConnInterface) UserManagementClient {
-	return &userManagementClient{cc}
+func NewUserManagementServiceClient(cc grpc.ClientConnInterface) UserManagementServiceClient {
+	return &userManagementServiceClient{cc}
 }
 
-func (c *userManagementClient) GetUsers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*UserList, error) {
+func (c *userManagementServiceClient) GetUsers(ctx context.Context, in *GetUsersRequest, opts ...grpc.CallOption) (*GetUsersResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UserList)
-	err := c.cc.Invoke(ctx, UserManagement_GetUsers_FullMethodName, in, out, cOpts...)
+	out := new(GetUsersResponse)
+	err := c.cc.Invoke(ctx, UserManagementService_GetUsers_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userManagementClient) GetUser(ctx context.Context, in *common.TimePagination, opts ...grpc.CallOption) (*User, error) {
+func (c *userManagementServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(User)
-	err := c.cc.Invoke(ctx, UserManagement_GetUser_FullMethodName, in, out, cOpts...)
+	out := new(GetUserResponse)
+	err := c.cc.Invoke(ctx, UserManagementService_GetUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userManagementClient) SearchUsers(ctx context.Context, in *SearchUsersRequest, opts ...grpc.CallOption) (*UserList, error) {
+func (c *userManagementServiceClient) SearchUsers(ctx context.Context, in *SearchUsersRequest, opts ...grpc.CallOption) (*SearchUsersResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UserList)
-	err := c.cc.Invoke(ctx, UserManagement_SearchUsers_FullMethodName, in, out, cOpts...)
+	out := new(SearchUsersResponse)
+	err := c.cc.Invoke(ctx, UserManagementService_SearchUsers_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userManagementClient) UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *userManagementServiceClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, UserManagement_UpdateUser_FullMethodName, in, out, cOpts...)
+	out := new(UpdateUserResponse)
+	err := c.cc.Invoke(ctx, UserManagementService_UpdateUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userManagementClient) DeleteUser(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *userManagementServiceClient) DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, UserManagement_DeleteUser_FullMethodName, in, out, cOpts...)
+	out := new(DeleteUserResponse)
+	err := c.cc.Invoke(ctx, UserManagementService_DeleteUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userManagementClient) AddExperience(ctx context.Context, in *Experience, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *userManagementServiceClient) AddExperience(ctx context.Context, in *AddExperienceRequest, opts ...grpc.CallOption) (*AddExperienceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, UserManagement_AddExperience_FullMethodName, in, out, cOpts...)
+	out := new(AddExperienceResponse)
+	err := c.cc.Invoke(ctx, UserManagementService_AddExperience_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userManagementClient) AddEducation(ctx context.Context, in *Education, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *userManagementServiceClient) AddEducation(ctx context.Context, in *AddEducationRequest, opts ...grpc.CallOption) (*AddEducationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, UserManagement_AddEducation_FullMethodName, in, out, cOpts...)
+	out := new(AddEducationResponse)
+	err := c.cc.Invoke(ctx, UserManagementService_AddEducation_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userManagementClient) GetExperiences(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*ExperienceList, error) {
+func (c *userManagementServiceClient) GetExperiences(ctx context.Context, in *GetExperiencesRequest, opts ...grpc.CallOption) (*GetExperiencesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ExperienceList)
-	err := c.cc.Invoke(ctx, UserManagement_GetExperiences_FullMethodName, in, out, cOpts...)
+	out := new(GetExperiencesResponse)
+	err := c.cc.Invoke(ctx, UserManagementService_GetExperiences_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userManagementClient) GetEducations(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*EducationList, error) {
+func (c *userManagementServiceClient) GetEducations(ctx context.Context, in *GetEducationsRequest, opts ...grpc.CallOption) (*GetEducationsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(EducationList)
-	err := c.cc.Invoke(ctx, UserManagement_GetEducations_FullMethodName, in, out, cOpts...)
+	out := new(GetEducationsResponse)
+	err := c.cc.Invoke(ctx, UserManagementService_GetEducations_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userManagementClient) DeleteExperience(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *userManagementServiceClient) DeleteExperience(ctx context.Context, in *DeleteExperienceRequest, opts ...grpc.CallOption) (*DeleteExperienceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, UserManagement_DeleteExperience_FullMethodName, in, out, cOpts...)
+	out := new(DeleteExperienceResponse)
+	err := c.cc.Invoke(ctx, UserManagementService_DeleteExperience_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userManagementClient) DeleteEducation(ctx context.Context, in *common.Id, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *userManagementServiceClient) DeleteEducation(ctx context.Context, in *DeleteEducationRequest, opts ...grpc.CallOption) (*DeleteEducationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, UserManagement_DeleteEducation_FullMethodName, in, out, cOpts...)
+	out := new(DeleteEducationResponse)
+	err := c.cc.Invoke(ctx, UserManagementService_DeleteEducation_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UserManagementServer is the server API for UserManagement service.
-// All implementations must embed UnimplementedUserManagementServer
+// UserManagementServiceServer is the server API for UserManagementService service.
+// All implementations must embed UnimplementedUserManagementServiceServer
 // for forward compatibility.
-type UserManagementServer interface {
-	GetUsers(context.Context, *emptypb.Empty) (*UserList, error)
-	GetUser(context.Context, *common.TimePagination) (*User, error)
-	SearchUsers(context.Context, *SearchUsersRequest) (*UserList, error)
-	UpdateUser(context.Context, *User) (*emptypb.Empty, error)
-	DeleteUser(context.Context, *common.Id) (*emptypb.Empty, error)
-	AddExperience(context.Context, *Experience) (*emptypb.Empty, error)
-	AddEducation(context.Context, *Education) (*emptypb.Empty, error)
-	GetExperiences(context.Context, *common.Id) (*ExperienceList, error)
-	GetEducations(context.Context, *common.Id) (*EducationList, error)
-	DeleteExperience(context.Context, *common.Id) (*emptypb.Empty, error)
-	DeleteEducation(context.Context, *common.Id) (*emptypb.Empty, error)
-	mustEmbedUnimplementedUserManagementServer()
+type UserManagementServiceServer interface {
+	GetUsers(context.Context, *GetUsersRequest) (*GetUsersResponse, error)
+	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
+	SearchUsers(context.Context, *SearchUsersRequest) (*SearchUsersResponse, error)
+	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
+	DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
+	AddExperience(context.Context, *AddExperienceRequest) (*AddExperienceResponse, error)
+	AddEducation(context.Context, *AddEducationRequest) (*AddEducationResponse, error)
+	GetExperiences(context.Context, *GetExperiencesRequest) (*GetExperiencesResponse, error)
+	GetEducations(context.Context, *GetEducationsRequest) (*GetEducationsResponse, error)
+	DeleteExperience(context.Context, *DeleteExperienceRequest) (*DeleteExperienceResponse, error)
+	DeleteEducation(context.Context, *DeleteEducationRequest) (*DeleteEducationResponse, error)
+	mustEmbedUnimplementedUserManagementServiceServer()
 }
 
-// UnimplementedUserManagementServer must be embedded to have
+// UnimplementedUserManagementServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedUserManagementServer struct{}
+type UnimplementedUserManagementServiceServer struct{}
 
-func (UnimplementedUserManagementServer) GetUsers(context.Context, *emptypb.Empty) (*UserList, error) {
+func (UnimplementedUserManagementServiceServer) GetUsers(context.Context, *GetUsersRequest) (*GetUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUsers not implemented")
 }
-func (UnimplementedUserManagementServer) GetUser(context.Context, *common.TimePagination) (*User, error) {
+func (UnimplementedUserManagementServiceServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
-func (UnimplementedUserManagementServer) SearchUsers(context.Context, *SearchUsersRequest) (*UserList, error) {
+func (UnimplementedUserManagementServiceServer) SearchUsers(context.Context, *SearchUsersRequest) (*SearchUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchUsers not implemented")
 }
-func (UnimplementedUserManagementServer) UpdateUser(context.Context, *User) (*emptypb.Empty, error) {
+func (UnimplementedUserManagementServiceServer) UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
-func (UnimplementedUserManagementServer) DeleteUser(context.Context, *common.Id) (*emptypb.Empty, error) {
+func (UnimplementedUserManagementServiceServer) DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
 }
-func (UnimplementedUserManagementServer) AddExperience(context.Context, *Experience) (*emptypb.Empty, error) {
+func (UnimplementedUserManagementServiceServer) AddExperience(context.Context, *AddExperienceRequest) (*AddExperienceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddExperience not implemented")
 }
-func (UnimplementedUserManagementServer) AddEducation(context.Context, *Education) (*emptypb.Empty, error) {
+func (UnimplementedUserManagementServiceServer) AddEducation(context.Context, *AddEducationRequest) (*AddEducationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddEducation not implemented")
 }
-func (UnimplementedUserManagementServer) GetExperiences(context.Context, *common.Id) (*ExperienceList, error) {
+func (UnimplementedUserManagementServiceServer) GetExperiences(context.Context, *GetExperiencesRequest) (*GetExperiencesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetExperiences not implemented")
 }
-func (UnimplementedUserManagementServer) GetEducations(context.Context, *common.Id) (*EducationList, error) {
+func (UnimplementedUserManagementServiceServer) GetEducations(context.Context, *GetEducationsRequest) (*GetEducationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetEducations not implemented")
 }
-func (UnimplementedUserManagementServer) DeleteExperience(context.Context, *common.Id) (*emptypb.Empty, error) {
+func (UnimplementedUserManagementServiceServer) DeleteExperience(context.Context, *DeleteExperienceRequest) (*DeleteExperienceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteExperience not implemented")
 }
-func (UnimplementedUserManagementServer) DeleteEducation(context.Context, *common.Id) (*emptypb.Empty, error) {
+func (UnimplementedUserManagementServiceServer) DeleteEducation(context.Context, *DeleteEducationRequest) (*DeleteEducationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteEducation not implemented")
 }
-func (UnimplementedUserManagementServer) mustEmbedUnimplementedUserManagementServer() {}
-func (UnimplementedUserManagementServer) testEmbeddedByValue()                        {}
+func (UnimplementedUserManagementServiceServer) mustEmbedUnimplementedUserManagementServiceServer() {}
+func (UnimplementedUserManagementServiceServer) testEmbeddedByValue()                               {}
 
-// UnsafeUserManagementServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UserManagementServer will
+// UnsafeUserManagementServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UserManagementServiceServer will
 // result in compilation errors.
-type UnsafeUserManagementServer interface {
-	mustEmbedUnimplementedUserManagementServer()
+type UnsafeUserManagementServiceServer interface {
+	mustEmbedUnimplementedUserManagementServiceServer()
 }
 
-func RegisterUserManagementServer(s grpc.ServiceRegistrar, srv UserManagementServer) {
-	// If the following call pancis, it indicates UnimplementedUserManagementServer was
+func RegisterUserManagementServiceServer(s grpc.ServiceRegistrar, srv UserManagementServiceServer) {
+	// If the following call pancis, it indicates UnimplementedUserManagementServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&UserManagement_ServiceDesc, srv)
+	s.RegisterService(&UserManagementService_ServiceDesc, srv)
 }
 
-func _UserManagement_GetUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+func _UserManagementService_GetUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUsersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserManagementServer).GetUsers(ctx, in)
+		return srv.(UserManagementServiceServer).GetUsers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserManagement_GetUsers_FullMethodName,
+		FullMethod: UserManagementService_GetUsers_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServer).GetUsers(ctx, req.(*emptypb.Empty))
+		return srv.(UserManagementServiceServer).GetUsers(ctx, req.(*GetUsersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserManagement_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(common.TimePagination)
+func _UserManagementService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserManagementServer).GetUser(ctx, in)
+		return srv.(UserManagementServiceServer).GetUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserManagement_GetUser_FullMethodName,
+		FullMethod: UserManagementService_GetUser_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServer).GetUser(ctx, req.(*common.TimePagination))
+		return srv.(UserManagementServiceServer).GetUser(ctx, req.(*GetUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserManagement_SearchUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserManagementService_SearchUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SearchUsersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserManagementServer).SearchUsers(ctx, in)
+		return srv.(UserManagementServiceServer).SearchUsers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserManagement_SearchUsers_FullMethodName,
+		FullMethod: UserManagementService_SearchUsers_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServer).SearchUsers(ctx, req.(*SearchUsersRequest))
+		return srv.(UserManagementServiceServer).SearchUsers(ctx, req.(*SearchUsersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserManagement_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(User)
+func _UserManagementService_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserManagementServer).UpdateUser(ctx, in)
+		return srv.(UserManagementServiceServer).UpdateUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserManagement_UpdateUser_FullMethodName,
+		FullMethod: UserManagementService_UpdateUser_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServer).UpdateUser(ctx, req.(*User))
+		return srv.(UserManagementServiceServer).UpdateUser(ctx, req.(*UpdateUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserManagement_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(common.Id)
+func _UserManagementService_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserManagementServer).DeleteUser(ctx, in)
+		return srv.(UserManagementServiceServer).DeleteUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserManagement_DeleteUser_FullMethodName,
+		FullMethod: UserManagementService_DeleteUser_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServer).DeleteUser(ctx, req.(*common.Id))
+		return srv.(UserManagementServiceServer).DeleteUser(ctx, req.(*DeleteUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserManagement_AddExperience_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Experience)
+func _UserManagementService_AddExperience_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddExperienceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserManagementServer).AddExperience(ctx, in)
+		return srv.(UserManagementServiceServer).AddExperience(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserManagement_AddExperience_FullMethodName,
+		FullMethod: UserManagementService_AddExperience_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServer).AddExperience(ctx, req.(*Experience))
+		return srv.(UserManagementServiceServer).AddExperience(ctx, req.(*AddExperienceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserManagement_AddEducation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Education)
+func _UserManagementService_AddEducation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddEducationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserManagementServer).AddEducation(ctx, in)
+		return srv.(UserManagementServiceServer).AddEducation(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserManagement_AddEducation_FullMethodName,
+		FullMethod: UserManagementService_AddEducation_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServer).AddEducation(ctx, req.(*Education))
+		return srv.(UserManagementServiceServer).AddEducation(ctx, req.(*AddEducationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserManagement_GetExperiences_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(common.Id)
+func _UserManagementService_GetExperiences_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetExperiencesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserManagementServer).GetExperiences(ctx, in)
+		return srv.(UserManagementServiceServer).GetExperiences(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserManagement_GetExperiences_FullMethodName,
+		FullMethod: UserManagementService_GetExperiences_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServer).GetExperiences(ctx, req.(*common.Id))
+		return srv.(UserManagementServiceServer).GetExperiences(ctx, req.(*GetExperiencesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserManagement_GetEducations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(common.Id)
+func _UserManagementService_GetEducations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetEducationsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserManagementServer).GetEducations(ctx, in)
+		return srv.(UserManagementServiceServer).GetEducations(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserManagement_GetEducations_FullMethodName,
+		FullMethod: UserManagementService_GetEducations_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServer).GetEducations(ctx, req.(*common.Id))
+		return srv.(UserManagementServiceServer).GetEducations(ctx, req.(*GetEducationsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserManagement_DeleteExperience_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(common.Id)
+func _UserManagementService_DeleteExperience_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteExperienceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserManagementServer).DeleteExperience(ctx, in)
+		return srv.(UserManagementServiceServer).DeleteExperience(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserManagement_DeleteExperience_FullMethodName,
+		FullMethod: UserManagementService_DeleteExperience_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServer).DeleteExperience(ctx, req.(*common.Id))
+		return srv.(UserManagementServiceServer).DeleteExperience(ctx, req.(*DeleteExperienceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserManagement_DeleteEducation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(common.Id)
+func _UserManagementService_DeleteEducation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteEducationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserManagementServer).DeleteEducation(ctx, in)
+		return srv.(UserManagementServiceServer).DeleteEducation(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserManagement_DeleteEducation_FullMethodName,
+		FullMethod: UserManagementService_DeleteEducation_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServer).DeleteEducation(ctx, req.(*common.Id))
+		return srv.(UserManagementServiceServer).DeleteEducation(ctx, req.(*DeleteEducationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// UserManagement_ServiceDesc is the grpc.ServiceDesc for UserManagement service.
+// UserManagementService_ServiceDesc is the grpc.ServiceDesc for UserManagementService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var UserManagement_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "hestia.jobfair.identity.v1.UserManagement",
-	HandlerType: (*UserManagementServer)(nil),
+var UserManagementService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "hestia.jobfair.identity.v1.UserManagementService",
+	HandlerType: (*UserManagementServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetUsers",
-			Handler:    _UserManagement_GetUsers_Handler,
+			Handler:    _UserManagementService_GetUsers_Handler,
 		},
 		{
 			MethodName: "GetUser",
-			Handler:    _UserManagement_GetUser_Handler,
+			Handler:    _UserManagementService_GetUser_Handler,
 		},
 		{
 			MethodName: "SearchUsers",
-			Handler:    _UserManagement_SearchUsers_Handler,
+			Handler:    _UserManagementService_SearchUsers_Handler,
 		},
 		{
 			MethodName: "UpdateUser",
-			Handler:    _UserManagement_UpdateUser_Handler,
+			Handler:    _UserManagementService_UpdateUser_Handler,
 		},
 		{
 			MethodName: "DeleteUser",
-			Handler:    _UserManagement_DeleteUser_Handler,
+			Handler:    _UserManagementService_DeleteUser_Handler,
 		},
 		{
 			MethodName: "AddExperience",
-			Handler:    _UserManagement_AddExperience_Handler,
+			Handler:    _UserManagementService_AddExperience_Handler,
 		},
 		{
 			MethodName: "AddEducation",
-			Handler:    _UserManagement_AddEducation_Handler,
+			Handler:    _UserManagementService_AddEducation_Handler,
 		},
 		{
 			MethodName: "GetExperiences",
-			Handler:    _UserManagement_GetExperiences_Handler,
+			Handler:    _UserManagementService_GetExperiences_Handler,
 		},
 		{
 			MethodName: "GetEducations",
-			Handler:    _UserManagement_GetEducations_Handler,
+			Handler:    _UserManagementService_GetEducations_Handler,
 		},
 		{
 			MethodName: "DeleteExperience",
-			Handler:    _UserManagement_DeleteExperience_Handler,
+			Handler:    _UserManagementService_DeleteExperience_Handler,
 		},
 		{
 			MethodName: "DeleteEducation",
-			Handler:    _UserManagement_DeleteEducation_Handler,
+			Handler:    _UserManagementService_DeleteEducation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
