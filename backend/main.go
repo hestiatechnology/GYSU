@@ -21,11 +21,7 @@ import (
 	//"hestia/api/pb/invoicing"
 	//"hestia/api/pb/textile"
 	"hestia/jobfair/api/interceptor"
-	"hestia/jobfair/api/methods/scompany"
-	"hestia/jobfair/api/methods/sidentity"
 
-	"hestia/jobfair/api/pb/company"
-	"hestia/jobfair/api/pb/identity"
 	"hestia/jobfair/api/utils/db"
 
 	"github.com/rs/zerolog"
@@ -117,9 +113,9 @@ func main() {
 	// Service registration
 	log.Info().Msg("Registering services")
 	log.Info().Msg("Registering Company service")
-	company.RegisterCompanyServiceServer(s, &scompany.CompanyServer{})
+	//company.RegisterCompanyServiceServer(s, &scompany.CompanyServer{})
 	log.Info().Msg("Registering Identity Management service")
-	identity.RegisterIdentityManagementServiceServer(s, &sidentity.IdentityServer{})
+	//identity.RegisterIdentityManagementServiceServer(s, &sidentity.IdentityServer{})
 	if err := s.Serve(lis); err != nil {
 		log.Fatal().Err(err).Msg("failed to serve")
 	}

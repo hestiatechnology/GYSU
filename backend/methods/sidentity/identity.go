@@ -23,8 +23,8 @@ type IdentityServer struct {
 	identity.UnimplementedIdentityManagementServiceServer
 }
 
-func (IdentityServer) Alive(ctx context.Context, token *common.Token) (*emptypb.Empty, error) {
-	id, err := uuid.Parse(token.GetToken())
+func (IdentityServer) Alive(ctx context.Context, req *identity.AliveRequest) (*identity.AliveResponse, error) {
+	id, err := uuid.Parse(req.GetToken().GetToken())
 	if err != nil {
 		return nil, herror.StatusWithInfo(codes.InvalidArgument, "Invalid token", herror.AuthInvalidTokenError, identity.IdentityManagementService_ServiceDesc.ServiceName, nil).Err()
 	}
@@ -49,7 +49,7 @@ func (IdentityServer) Alive(ctx context.Context, token *common.Token) (*emptypb.
 		return nil, herror.StatusWithInfo(codes.Unauthenticated, "User session expired", herror.AuthInvalidTokenError, identity.IdentityManagementService_ServiceDesc.ServiceName, nil).Err()
 	}
 
-	return &emptypb.Empty{}, nil
+	return &identity.AliveResponse{}, nil
 }
 
 func (IdentityServer) Login(ctx context.Context, loginRequest *identity.LoginRequest) (*common.Token, error) {

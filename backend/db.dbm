@@ -3,8 +3,8 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.1.6" use-changelog="false" max-obj-count="16"
-	 last-position="170,-89" last-zoom="0.75" scene-rect="-228,-127,2723.05,1203.8"
+<dbmodel pgmodeler-ver="1.1.6" use-changelog="false" max-obj-count="18"
+	 last-position="-148,25" last-zoom="0.65" scene-rect="-228,-127,2723.05,1226.52"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -36,7 +36,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="company" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="company"/>
 	<role name="postgres"/>
-	<position x="960" y="720"/>
+	<position x="960" y="900"/>
 	<column name="id" not-null="true" default-value="gen_random_uuid()">
 		<type name="uuid" length="0"/>
 	</column>
@@ -342,6 +342,21 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
+<table name="company_users" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="company"/>
+	<role name="postgres"/>
+	<position x="880" y="640"/>
+	<column name="company_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<constraint name="pk_" type="pk-constr" table="company.company_users">
+		<columns names="company_id,user_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
 <constraint name="fk_event_speaker_event" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="events.event" table="events.event_speaker">
 	<columns names="event_id" ref-type="src-columns"/>
@@ -416,6 +431,18 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <constraint name="fk_user_session_user" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="users.users" table="users.user_session">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_company_users_company" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="company.company" table="company.company_users">
+	<columns names="company_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_company_users_user" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="RESTRICT" del-action="RESTRICT" ref-table="users.users" table="company.company_users">
 	<columns names="user_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
@@ -496,6 +523,18 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 custom-color="#4d2815"
 	 src-table="users.user_session"
 	 dst-table="users.users" reference-fk="fk_user_session_user"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_company_users_company" type="relfk" layers="0"
+	 custom-color="#6a2028"
+	 src-table="company.company_users"
+	 dst-table="company.company" reference-fk="fk_company_users_company"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_company_users_users" type="relfk" layers="0"
+	 custom-color="#f354c5"
+	 src-table="company.company_users"
+	 dst-table="users.users" reference-fk="fk_company_users_user"
 	 src-required="false" dst-required="true"/>
 
 </dbmodel>

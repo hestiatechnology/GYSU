@@ -11,8 +11,14 @@ import (
 
 type CtxKey string
 
-const UserIdKey CtxKey = "user_id"
-const RoleKey CtxKey = "role"
+const (
+	UserIdKey   CtxKey = "user_id"
+	RoleKey     CtxKey = "role"
+	StudentRole        = "student"
+	CompanyRole        = "company"
+	StaffRole          = "staff"
+	AdminRole          = "admin"
+)
 
 var (
 	ErrExpiredToken = errors.New("TokenExpired")
@@ -33,10 +39,17 @@ func VerifyAuthToken(ctx context.Context, token uuid.UUID) (uuid.UUID, string, e
 	var role string
 	var expiry_date time.Time
 	err = db.QueryRow(ctx, `
-    SELECT us.user_id, us.expiry_date, u.role 
-    FROM users.user_session us
-    JOIN users.users u ON us.user_id = u.id
-    WHERE us.id = $1
+    SELECT 
+		us.user_id, 
+		us.expiry_date, 
+		u.role 
+    FROM 
+		users.user_session us
+    JOIN 
+		users.users u 
+			ON us.user_id = u.id
+    WHERE 
+		us.id = $1
 	`, token).Scan(&userId, &expiry_date, &role)
 	if err != nil {
 		return uuid.Nil, "", ErrInvalidToken
